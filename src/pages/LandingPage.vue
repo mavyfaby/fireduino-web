@@ -1,7 +1,5 @@
 <template>
   <div>
-    <v-appbar />
-
     <div class="main-container">
       <div class="flex flex-col">
         <div class="text-sm lg:text-base">INTRODUCING</div>
@@ -24,7 +22,6 @@
 </template>
 
 <script setup>
-import VAppbar from "~/components/VAppbar.vue";
 import previewImageLight from "~/assets/img/mobile-light.png";
 import previewImageDark from "~/assets/img/mobile-dark.png";
 

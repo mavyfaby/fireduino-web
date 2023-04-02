@@ -6,5 +6,5 @@
 </template>
 
 <script setup>
-import fireduinoLogo from "~/assets/svg/fireduino.svg";
+import fireduinoLogo from "~/assets/svg/fireduino.svg?url";
 </script>
