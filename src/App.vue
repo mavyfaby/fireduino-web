@@ -5,8 +5,6 @@
 </template>
 
 <script setup>
-
-
 import { setDefaultTheme } from './theme';
 
 setDefaultTheme();
