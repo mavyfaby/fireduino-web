@@ -12,7 +12,7 @@ export function setTheme(color: string, isDarkOverride: boolean) {
   // Generate theme from theme builder
   const theme = themeFromSourceColor(argbFromHex(color));
   // Check if the user has dark mode turned on
-  const isDark = isDarkOverride === null ? isDarkMode() : isDarkOverride;
+  const isDark = isDarkOverride || isDarkMode();
   // Get store
   const store = useStore();
   // Is first time open
