@@ -30,7 +30,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   // Set page title
-  setTitle(to.name);
+  setTitle(to.name?.toString() ?? "");
 });
 
 export default router;

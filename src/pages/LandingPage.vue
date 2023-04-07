@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import previewImageLight from "~/assets/img/mobile-light.png";
 import previewImageDark from "~/assets/img/mobile-dark.png";
 

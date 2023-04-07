@@ -9,14 +9,14 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import VLogo from "./VLogo.vue";
 
 import { setDefaultTheme, isDarkMode } from "~/theme";
 
 import "@material/web/switch/switch";
 
-function changeTheme(ev) {
+function changeTheme(ev: any) {
   setDefaultTheme(ev.target.button.ariaChecked === "true");
 }
 </script>

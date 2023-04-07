@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 const useStore = defineStore("global", () => {
-  const dark = false;
+  const dark: boolean = false;
 
   return {
     dark
