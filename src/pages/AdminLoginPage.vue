@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="tonal-card w-full md:w-3/5 lg:w-1/2 xl:w-1/3">
+    <div class="tonal-card w-full sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/3">
       <h3 class="title">Admin Login</h3>
       <div class="flex flex-col">
         <!-- Username -->
@@ -94,6 +94,6 @@ function login() {
 
 <style scoped>
 .title {
-  @apply font-bold text-2xl mb-3;
+  @apply font-bold text-2xl mb-3 text-center;
 }
 </style>

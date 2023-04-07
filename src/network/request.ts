@@ -10,7 +10,7 @@ import showToast from "~/utils/toast";
 const instance = axios.create({
   baseURL: process.env.NODE_ENV === "production" ? "https://fireduino.azurewebsites.net" : "http://127.0.0.1:4000",
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/x-www-form-urlencoded",
   }
 });
 
@@ -18,7 +18,6 @@ const instance = axios.create({
  * Make a request to the Fireduino API
  */
 function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | null, callback: (error: boolean, response: any) => void) {
-
   // Create config 
   const config: AxiosRequestConfig = {
     method,
@@ -33,7 +32,13 @@ function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | nul
 
   // Execute request
   instance(config).then((response) => {
-    callback(false, response.data);
+    // If not success
+    if (!response.data.success) {
+      // Show error toast
+      showToast(TYPE.ERROR, response.data.message);
+    }
+
+    callback(!response.data.success, response.data);
   })
   .catch((error) => {
     // If has custom message
