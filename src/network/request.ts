@@ -1,10 +1,11 @@
 import type { HttpMethod } from "~/types";
-import type { AxiosRequestConfig } from "axios";
+import type { AxiosError, AxiosRequestConfig } from "axios";
 import { TYPE } from "vue-toastification";
 import { Endpoints } from "./endpoints";
 
 import axios from "axios";
 import showToast from "~/utils/toast";
+import { getAuthToken } from "./session";
 
 // Create a new axios instance
 const instance = axios.create({
@@ -24,6 +25,13 @@ function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | nul
     url: endpoint,
   };
 
+  // If endpoint is not login
+  if (endpoint !== Endpoints.Login) {
+    config.headers = {
+      Authorization: `Bearer ${getAuthToken()}`,
+    };
+  }
+
   // If data is not null
   if (data !== null) {
     // Add data to config
@@ -40,10 +48,10 @@ function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | nul
 
     callback(!response.data.success, response.data);
   })
-  .catch((error) => {
+  .catch((error: AxiosError) => {
     // If has custom message
-    if (error.response?.data.message) {
-      error.message = error.response.data.message;
+    if (((error.response?.data) as any).message) {
+      error.message = ((error.response?.data) as any).message
     }
 
     // Show error toast

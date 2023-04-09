@@ -12,6 +12,7 @@ import './scss/main.scss'
 const app = createApp(App);
 const pinia = createPinia();
 
+// TODO: Change toast colors
 const toastOptions = {
   position: POSITION.BOTTOM_RIGHT,
   maxToasts: 2,

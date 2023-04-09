@@ -4,5 +4,6 @@
 
 // List of endpoints
 export enum Endpoints {
-    Login = "/login"
+    Login = "/login",
+    Validate = "/validate",
 };

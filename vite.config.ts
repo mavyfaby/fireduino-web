@@ -30,8 +30,8 @@ export default defineConfig({
         entryFileNames: `assets/fireduino.[hash].js`,
         chunkFileNames: `assets/fireduino.[hash].js`,
         assetFileNames: `assets/fireduino.[hash].[ext]`,
-        compact: true
-      }
+        compact: true,
+      },
     }
   }
 })

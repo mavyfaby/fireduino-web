@@ -1,6 +1,6 @@
 <template>
-  <div class="text-center">
-    Admin Page
+  <div>
+    Establishment
   </div>
 </template>
 
