@@ -1,4 +1,4 @@
-import { argbFromHex, themeFromSourceColor, applyTheme } from "@material/material-color-utilities";
+import { argbFromHex, themeFromSourceColor, applyTheme, hexFromArgb } from "@material/material-color-utilities";
 import { setStore, getStore } from "~/utils/storage";
 import { useStore } from "~/store";
 import { THEME_COLOR } from "../env";
@@ -29,6 +29,16 @@ export function setTheme(color: string, isDark: boolean) {
     store.dark = isSystemDark;
   }
 
+  // Light background (default)
+  let background = theme.schemes.light.background;
+
+  // If dark mode
+  if (store.dark) {
+    background = theme.schemes.dark.background;
+  }
+
+  // Apply meta color theme
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", hexFromArgb(background));
   // Apply theme
   applyTheme(theme, { target: document.documentElement, dark: store.dark });
 }

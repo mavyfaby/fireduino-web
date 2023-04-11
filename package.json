@@ -1,7 +1,7 @@
 {
   "name": "fireduino-web",
   "private": true,
-  "version": "1.0.0-pre.9",
+  "version": "1.0.0-pre.10",
   "type": "module",
   "scripts": {
     "dev": "vite",
