@@ -9,6 +9,7 @@
         :error="name.message.length > 0"
         :errorText="name.message"
         class="w-full"
+        :disabled="isDisabled"
         :maxLength="MAX_INPUTS.FIRE_DEPARTMENTS.NAME"
         label="Name"
       >
@@ -22,6 +23,7 @@
           v-model.trim="phone.text"
           :error="phone.message.length > 0"
           :errorText="phone.message"
+          :disabled="isDisabled"
           :maxLength="MAX_INPUTS.FIRE_DEPARTMENTS.PHONE"
           label="Phone"
         >
@@ -34,6 +36,7 @@
           :error="address.message.length > 0"
           :errorText="address.message"
           :maxLength="MAX_INPUTS.FIRE_DEPARTMENTS.ADDRESS"
+          :disabled="isDisabled"
           label="Address
         ">
           <md-icon slot="leadingicon">location_city</md-icon>
@@ -45,6 +48,7 @@
           :error="latitude.message.length > 0"
           :errorText="latitude.message"
           :maxLength="MAX_INPUTS.FIRE_DEPARTMENTS.LATITUDE"
+          :disabled="isDisabled"
           label="Latitude"
         >
           <md-icon slot="leadingicon">location_on</md-icon>
@@ -56,6 +60,7 @@
           :error="longitude.message.length > 0"
           :errorText="longitude.message"
           :maxLength="MAX_INPUTS.FIRE_DEPARTMENTS.LONGITUDE"
+          :disabled="isDisabled"
           label="Longitude"
         >
           <md-icon slot="leadingicon">location_on</md-icon>
@@ -64,22 +69,33 @@
     </div>
 
     <div class="flex space-x-3" slot="footer">
-      <md-text-button label="Cancel" @click="onClose" />
-      <md-text-button label="Add Department" @click="addDepartment" />
+      <md-text-button v-if="isSuccess" label="Done" @click="onClose">
+        <md-icon slot="icon">check</md-icon>
+      </md-text-button>
+      <div v-else>
+        <md-text-button :disabled="isDisabled" label="Cancel" @click="onClose" />
+        <md-text-button
+          :disabled="isDisabled"
+          :label="isDisabled ?  'Adding department...' : 'Add Department'"
+          @click="addDepartment"
+        />
+      </div>
     </div>
-    
   </md-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-
 import "@material/web/button/text-button";
 import "@material/web/textfield/filled-text-field";
 
+import { ref } from "vue";
 import { useStore } from "~/store";
 import { MAX_INPUTS } from "~/env";
 import { isTelPhone } from "~/utils/string";
+
+import makeRequest, { Endpoints } from "~/network/request";
+import showToast from "~/utils/toast";
+import { TYPE } from "vue-toastification";
 
 const store = useStore();
 
@@ -88,14 +104,46 @@ const phone = ref({ text: "", message: "" });
 const address = ref({ text: "", message: "" });
 const latitude = ref({ text: "", message: "" });
 const longitude = ref({ text: "", message: "" });
+const isDisabled = ref(false);
+const isSuccess = ref(false);
 
 function onClose() {
   store.dialog.addFireDepartments.open = false;
+  isDisabled.value = false;
+
+  if (isSuccess.value) {
+    name.value.text = "";
+    phone.value.text = "";
+    address.value.text = "";
+    latitude.value.text = "";
+    longitude.value.text = "";
+  }
 }
 
 function addDepartment() {
   // Validate inputs
   if (!_validate()) return;
+
+  isDisabled.value = true;
+
+  // Send request
+  makeRequest("POST", Endpoints.Department, {
+    name: name.value.text,
+    phone: phone.value.text,
+    address: address.value.text,
+    latitude: latitude.value.text,
+    longitude: longitude.value.text,
+  }, (err, response) => {
+    if (err) {
+      isDisabled.value = false;
+      return;
+    }
+
+    // Reset inputs
+    isSuccess.value = true;
+    // Show message
+    showToast(err || !response.success ? TYPE.ERROR : TYPE.SUCCESS, response.message);
+  });
 }
 
 /**
