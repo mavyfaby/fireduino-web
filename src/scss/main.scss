@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@function hexToRGB($hex) {
-  @return red($hex), green($hex), blue($hex);
+@import '@material-symbols/font-600/rounded.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+:root {
+  --md-icon-font: 'Material Symbols Rounded';
+  --md-icon-weight: 500;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+md-icon[filled] {
+  --md-icon-font-variation-settings: 'FILL' 1;
+}
 
 body {
   @apply bg-background text-on-background h-screen;
@@ -17,17 +23,41 @@ body {
 }
 
 .card {
-  @apply flex flex-col mt-16 bg-surface-variant text-on-surface-variant rounded-[32px] p-8;
+  @apply flex flex-col bg-surface-variant text-on-surface-variant rounded-[32px] p-8;
 }
 
 .tonal-card {
-  @apply flex flex-col relative mt-16 text-on-surface rounded-[32px] p-9;
+  @apply flex flex-col relative text-on-surface rounded-[32px] p-9;
   
   &::before {
     content: "";
     background-color: var(--md-sys-color-surface-variant);
 
     @apply absolute inline-block top-0 left-0 right-0 bottom-0 rounded-[32px] z-[-1] opacity-50;
+  }
+}
+
+.table {
+  @apply w-full bg-surface text-on-surface-variant rounded-2xl p-2 mt-3;
+
+  table {
+    @apply w-full;
+
+    th {
+      @apply bg-surface-variant-50 text-on-surface-variant py-2 border-2 border-outline-variant;
+    }
+
+    tr {
+      @apply text-center;
+    }
+
+    tbody tr {
+      @apply hover:bg-surface-variant-50 cursor-pointer;
+    }
+
+    tbody tr td {
+      @apply py-2 border-2 border-outline-variant;
+    }
   }
 }
 

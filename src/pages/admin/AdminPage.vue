@@ -2,7 +2,7 @@
   <div class="mt-5">
     <AdminTabs @change="onTabChange" :active="tab" />
     
-    <div class="mt-10">
+    <div class="mt-5">
       <transition name="slide-fade" mode="out-in">
         <DashboardTab v-if="tab == 0" />
         <EstablishmentTab v-else-if="tab == 1" />

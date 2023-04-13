@@ -1,7 +1,7 @@
 <template>
   <div>
-    Dashboard
-  </div>
+
+</div>
 </template>
 
 <script lang="ts" setup>

@@ -1,10 +1,10 @@
 <template>
   <div class="flex justify-center">
-    <div class="tonal-card w-full sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/3">
+    <div class="tonal-card mt-16 w-full sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/3">
       <h3 class="title">Admin Login</h3>
       <div class="flex flex-col">
         <!-- Username -->
-        <md-filled-text-field
+        <md-outlined-text-field
           v-model="user"
           class="mt-4"
           label="Username"
@@ -12,13 +12,11 @@
           :disabled="isDisabled"
           placeholder="Enter username"
         >
-          <md-icon slot="leadingicon">
-            <UserIcon />
-          </md-icon>
-        </md-filled-text-field>
+          <md-icon slot="leadingicon">person</md-icon>
+        </md-outlined-text-field> 
 
         <!-- Password -->
-        <md-filled-text-field
+        <md-outlined-text-field
           v-model="pass"
           class="mt-4"
           type="password"
@@ -27,14 +25,14 @@
           :disabled="isDisabled"
           placeholder="Enter password"
         >
-          <md-icon slot="leadingicon">
-            <LockIcon />
-          </md-icon>
-        </md-filled-text-field>
+          <md-icon slot="leadingicon">lock</md-icon>
+        </md-outlined-text-field>
 
         <!-- Login Button -->
         <div class="flex items-center justify-end">
-          <md-filled-button @click="login" class="mt-8" :disabled="isDisabled" :label="loginLabel" />
+          <md-filled-button @click="login" class="mt-8" :disabled="isDisabled" :label="loginLabel">
+            <md-icon slot="icon" v-if="!isDisabled">login</md-icon>
+          </md-filled-button>
         </div>
       </div>
     </div>  
@@ -42,12 +40,9 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/textfield/filled-text-field";
+import "@material/web/textfield/outlined-text-field";
 import "@material/web/button/filled-button";
 import "@material/web/icon/icon";
-
-import UserIcon from "@mdi/svg/svg/account-outline.svg?component";
-import LockIcon from "@mdi/svg/svg/lock-outline.svg?component";
 
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";

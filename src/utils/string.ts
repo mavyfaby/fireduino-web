@@ -14,3 +14,9 @@ export function rb64(text: string) {
     return decode(text);
 }
 
+/**
+ * Map a number from one range to another
+ */
+export function map(input: number, inMin: number, inMax: number, outMin: number, outMax: number) {
+    return (input - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}

@@ -50,7 +50,7 @@ function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | nul
   })
   .catch((error: AxiosError) => {
     // If has custom message
-    if (((error.response?.data) as any).message) {
+    if (error.response && ((error.response?.data) as any).message) {
       error.message = ((error.response?.data) as any).message
     }
 
