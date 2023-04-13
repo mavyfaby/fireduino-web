@@ -9,6 +9,8 @@
         <FireDepartmentTab v-else-if="tab == 2" />
       </transition>
     </div>
+    
+    <AddDepartmentDialog />
   </div>
 </template>
 
@@ -19,6 +21,8 @@ import AdminTabs from "./AdminTabs.vue";
 import DashboardTab from "./tabs/DashboardTab.vue";
 import EstablishmentTab from "./tabs/EstablishmentTab.vue";
 import FireDepartmentTab from "./tabs/FireDepartmentTab.vue";
+
+import AddDepartmentDialog from "~/dialogs/AddDepartmentDialog.vue";
 
 const tab = ref(0);
 

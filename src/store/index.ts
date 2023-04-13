@@ -6,7 +6,17 @@ const useStore = defineStore("global", () => {
   const isFromLogout: boolean = false;
 
   const dialog = {
-    logout: false
+    logout: {
+      open: false
+    },
+    addFireDepartments: {
+      open: false,
+      name: "",
+      phone: "",
+      address: "",
+      latitude: "",
+      longitude: "",
+    }
   };
 
   return {

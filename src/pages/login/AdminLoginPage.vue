@@ -4,7 +4,7 @@
       <h3 class="title">Admin Login</h3>
       <div class="flex flex-col">
         <!-- Username -->
-        <md-outlined-text-field
+        <md-filled-text-field
           v-model="user"
           class="mt-4"
           label="Username"
@@ -13,10 +13,10 @@
           placeholder="Enter username"
         >
           <md-icon slot="leadingicon">person</md-icon>
-        </md-outlined-text-field> 
+        </md-filled-text-field> 
 
         <!-- Password -->
-        <md-outlined-text-field
+        <md-filled-text-field
           v-model="pass"
           class="mt-4"
           type="password"
@@ -26,7 +26,7 @@
           placeholder="Enter password"
         >
           <md-icon slot="leadingicon">lock</md-icon>
-        </md-outlined-text-field>
+        </md-filled-text-field>
 
         <!-- Login Button -->
         <div class="flex items-center justify-end">
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/textfield/outlined-text-field";
+import "@material/web/textfield/filled-text-field";
 import "@material/web/button/filled-button";
 import "@material/web/icon/icon";
 

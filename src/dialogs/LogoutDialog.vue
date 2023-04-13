@@ -1,26 +1,27 @@
 <template>
-  <md-dialog :open="store.dialog.logout" @closed="onClose" scrimClickAction="">
+  <md-dialog :open="store.dialog.logout.open" @closed="onClose" scrimClickAction="">
     <div slot="header">Logout</div>
 
     Are you sure you want to logout?
 
     <div class="flex space-x-3" slot="footer">
       <md-text-button label="Cancel" @click="onClose" />
-      <md-tonal-button label="Logout" @click="logout" />
+      <md-text-button label="Logout" @click="logout" />
     </div>
-    
   </md-dialog>
 </template>
 
 <script lang="ts" setup>
+import "@material/web/button/text-button";
+
 import { revokeAuthToken } from "~/network/session";
-import router from "~/router";
 import { useStore } from "~/store";
+import router from "~/router";
 
 const store = useStore();
 
 function onClose() {
-  store.dialog.logout = false;
+  store.dialog.logout.open = false;
 }
 
 function logout() {
