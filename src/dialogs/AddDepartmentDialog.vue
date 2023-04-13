@@ -134,15 +134,16 @@ function addDepartment() {
     latitude: latitude.value.text,
     longitude: longitude.value.text,
   }, (err, response) => {
+    // Show message
+    showToast(err || !response.success ? TYPE.ERROR : TYPE.SUCCESS, response.message);
+    
     if (err) {
       isDisabled.value = false;
       return;
     }
-
+    
     // Reset inputs
     isSuccess.value = true;
-    // Show message
-    showToast(err || !response.success ? TYPE.ERROR : TYPE.SUCCESS, response.message);
   });
 }
 

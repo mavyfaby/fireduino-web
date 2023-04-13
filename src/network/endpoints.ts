@@ -7,4 +7,5 @@ export enum Endpoints {
     Login = "/login",
     Validate = "/validate",
     Department = "/department",
+    Departments = "/departments",
 };

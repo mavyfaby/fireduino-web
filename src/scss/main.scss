@@ -41,7 +41,7 @@ body {
   @apply w-full bg-surface text-on-surface-variant rounded-2xl p-2 mt-3;
 
   table {
-    @apply w-full;
+    @apply w-full text-sm;
 
     th {
       @apply bg-surface-variant-50 text-on-surface-variant py-2 border-2 border-outline-variant;
