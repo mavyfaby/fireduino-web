@@ -40,10 +40,6 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/textfield/filled-text-field";
-import "@material/web/button/filled-button";
-import "@material/web/icon/icon";
-
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { TYPE } from "vue-toastification";

@@ -18,9 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/navigationbar/navigation-bar";
-import "@material/web/navigationtab/navigation-tab";
-
 // Define props
 defineProps({
   active: {

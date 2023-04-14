@@ -1,6 +1,6 @@
 <template>
-  <md-dialog :open="store.dialog.addFireDepartments.isOpen" @closed="onClose" scrimClickAction="">
-    <div slot="header">Add Fire Department</div>
+  <md-dialog :open="store.dialog.entity.isOpen" @closed="onClose" scrimClickAction="">
+    <div slot="header">{{ store.dialog.entity.title }}</div>
 
     <div class="grid items-center gap-5 py-2">
       <!-- Name -->
@@ -15,6 +15,26 @@
       >
         <md-icon slot="leadingicon">location_city</md-icon>
       </md-filled-text-field>
+      
+      <!-- Establishment Invite Key -->
+      <div v-if="store.dialog.entity.entity === 'establishment'" class="flex space-x-4 items-center">
+        <md-filled-text-field
+          :value="formatInviteKey(inviteKey)"
+          supportingText="Use this key to signup for your establishment in the mobile app. "
+          class="w-full"
+          label="Invite Key"
+          readOnly
+        >
+          <md-icon slot="leadingicon">vpn_key</md-icon>
+        </md-filled-text-field>
+
+        <md-text-button
+          :disabled="isGeneratingKey"
+          @click=generateInviteKey
+          class="mb-3"
+          :label="isGeneratingKey ? 'Generating...' : 'Generate'"
+        />
+      </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Phone Number -->
@@ -76,8 +96,8 @@
         <md-text-button :disabled="isDisabled" label="Cancel" @click="onClose" />
         <md-text-button
           :disabled="isDisabled"
-          :label="isDisabled ?  'Adding department...' : 'Add Department'"
-          @click="addDepartment"
+          :label="isDisabled ? 'Adding ' + (store.dialog.entity.entity === 'department' ? 'department...' : 'Establishment...') : store.dialog.entity.acceptAction.name"
+          @click="addEntity"
         />
       </div>
     </div>
@@ -85,17 +105,11 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/button/text-button";
-import "@material/web/textfield/filled-text-field";
-
 import { ref } from "vue";
 import { useStore } from "~/store";
 import { MAX_INPUTS } from "~/env";
-import { isTelPhone } from "~/utils/string";
-
+import { isTelPhone, formatInviteKey  } from "~/utils/string";
 import makeRequest, { Endpoints } from "~/network/request";
-import showToast from "~/utils/toast";
-import { TYPE } from "vue-toastification";
 
 const store = useStore();
 
@@ -104,12 +118,16 @@ const phone = ref({ text: "", message: "" });
 const address = ref({ text: "", message: "" });
 const latitude = ref({ text: "", message: "" });
 const longitude = ref({ text: "", message: "" });
+const inviteKey = ref("");
 const isDisabled = ref(false);
 const isSuccess = ref(false);
+const isGeneratingKey = ref(false);
 
 function onClose() {
-  store.dialog.addFireDepartments.isOpen = false;
+  store.dialog.entity.isOpen = false;
   isDisabled.value = false;
+  isGeneratingKey.value = false;
+  inviteKey.value = "";
 
   if (isSuccess.value) {
     name.value.text = "";
@@ -120,30 +138,43 @@ function onClose() {
   }
 }
 
-function addDepartment() {
+/**
+ * Add entity (Fire Department | Establishment)
+ */
+function addEntity() {
   // Validate inputs
   if (!_validate()) return;
-
   isDisabled.value = true;
 
-  // Send request
-  makeRequest("POST", Endpoints.Department, {
+  // Trigger action
+  store.dialog.entity.acceptAction.action({
     name: name.value.text,
     phone: phone.value.text,
     address: address.value.text,
     latitude: latitude.value.text,
     longitude: longitude.value.text,
-  }, (err, response) => {
-    // Show message
-    showToast(err || !response.success ? TYPE.ERROR : TYPE.SUCCESS, response.message);
-    
-    if (err) {
+    invite_key: inviteKey.value,
+  }, (success) => {
+    if (!success) {
       isDisabled.value = false;
       return;
     }
-    
-    // Reset inputs
+
     isSuccess.value = true;
+  });
+}
+
+function generateInviteKey() {
+  isGeneratingKey.value = true;
+
+  makeRequest("GET", Endpoints.InviteKey, null, (error, response) => {
+    if (error) {
+      isGeneratingKey.value = false;
+      return;
+    }
+
+    inviteKey.value = response.message;
+    isGeneratingKey.value = false;
   });
 }
 

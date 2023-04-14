@@ -1,8 +1,14 @@
+import type {  Establishment, FireDepartment } from "~/types";
 import { defineStore } from "pinia";
 
-type DialogAction = { name: string, action: Function };
-type DialogInfo = { title : string, content: string, actions: DialogAction[] };
+type DialogParam = { title : string, content: string, actions: EntityAction[] };
+type EntityAction = { name: string, action: Function };
+type EntityActionAccept = { name: string, action: (entity: Establishment | FireDepartment, callback: (success: boolean) => void) => void };
+type EntityParam = { title: string, entity: "establishment" | "department", acceptAction: EntityActionAccept };
 
+/**
+ * Global store
+ */
 const useStore = defineStore("global", () => {
   const dark: boolean = false;
   const isNotAuth: boolean = false;
@@ -16,8 +22,8 @@ const useStore = defineStore("global", () => {
       isOpen: false,
       title: "",
       content: "",
-      actions: [] as DialogAction[], 
-      open(data: DialogInfo) {
+      actions: [] as EntityAction[], 
+      open(data: DialogParam) {
         this.title = data.title;
         this.content = data.content;
         this.actions = data.actions;
@@ -27,13 +33,20 @@ const useStore = defineStore("global", () => {
         this.isOpen = false;
       }
     },
-    addFireDepartments: {
+    entity: {
       isOpen: false,
-      name: "",
-      phone: "",
-      address: "",
-      latitude: "",
-      longitude: ""
+      title: "",
+      entity: "",
+      acceptAction: {} as EntityActionAccept,
+      open(data: EntityParam) {
+        this.title = data.title;
+        this.entity = data.entity;
+        this.acceptAction = data.acceptAction;
+        this.isOpen = true;
+      },
+      close() {
+        this.isOpen = false;
+      }
     },
   };
 

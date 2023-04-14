@@ -1,5 +1,8 @@
 import { Endpoints as e } from "~/network/endpoints";
 
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type Endpoints = e
+
 export type FireDepartment = {
   id?: number;
   name: string;
@@ -9,5 +12,6 @@ export type FireDepartment = {
   longitude: string;
 }
 
-export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
-export type Endpoints = e
+export type Establishment = FireDepartment & {
+  invite_key: string;
+}

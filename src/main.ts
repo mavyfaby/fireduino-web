@@ -8,6 +8,7 @@ import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
 import './scss/main.scss'
+import "./components";
 
 const app = createApp(App);
 const pinia = createPinia();

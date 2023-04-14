@@ -35,15 +35,13 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/icon/icon";
-import "@material/web/button/filled-button";
-import "@material/web/iconbutton/standard-icon-button";
+import type { FireDepartment } from "~/types";
+import { TYPE } from "vue-toastification";
 
 import { ref, onMounted } from "vue";
 import { useStore } from "~/store";
 import makeRequest, { Endpoints } from "~/network/request";
-
-import type { FireDepartment } from "~/types";
+import showToast from "~/utils/toast";
 
 const store = useStore();
 const departments = ref<FireDepartment[]>([]);
@@ -55,7 +53,36 @@ function onEdit(id: number | undefined) {
 }
 
 function openAddFireDepartmentDialog() {
-  store.dialog.addFireDepartments.isOpen = true;
+  store.dialog.entity.open({
+    title: "Add Fire Department",
+    entity: "department",
+    acceptAction: {
+      name: "Add Department",
+      action: (entity, callback) => {
+        // Send request
+        makeRequest("POST", Endpoints.Department, {
+          name: entity.name,
+          phone: entity.phone,
+          address: entity.address,
+          latitude: entity.latitude,
+          longitude: entity.longitude,
+        }, (err, response) => {
+          // Show message
+          showToast(err || !response.success ? TYPE.ERROR : TYPE.SUCCESS, response.message);
+          
+          if (err) {
+            callback(false);
+            return;
+          }
+          
+          // Reset inputs
+          callback(true);
+          // Fetch new departments
+          getFireDepartments();
+        });
+      }
+    }
+  });
 }
 
 onMounted(getFireDepartments);

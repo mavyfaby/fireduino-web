@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/button/text-button";
 import { useStore } from "~/store";
 
 const store = useStore();

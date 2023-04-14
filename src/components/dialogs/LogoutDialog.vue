@@ -12,8 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import "@material/web/button/text-button";
-
 import { revokeAuthToken } from "~/network/session";
 import { useStore } from "~/store";
 import router from "~/router";

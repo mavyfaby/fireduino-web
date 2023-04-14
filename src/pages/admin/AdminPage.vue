@@ -10,7 +10,7 @@
       </transition>
     </div>
     
-    <AddDepartmentDialog />
+    <AddEntityDialog />
   </div>
 </template>
 
@@ -22,7 +22,7 @@ import DashboardTab from "./tabs/DashboardTab.vue";
 import EstablishmentTab from "./tabs/EstablishmentTab.vue";
 import FireDepartmentTab from "./tabs/FireDepartmentTab.vue";
 
-import AddDepartmentDialog from "~/components/dialogs/AddDepartmentDialog.vue";
+import AddEntityDialog from "~/components/dialogs/AddEntityDialog.vue";
 
 const tab = ref(0);
 

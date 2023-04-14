@@ -27,3 +27,10 @@ export function map(input: number, inMin: number, inMax: number, outMin: number,
 export function isTelPhone(phone: string) {
     return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(phone);
 }
+
+/**
+ * Format invite key (e.g. 1234-5678)
+ */
+export function formatInviteKey(key: string) {
+    return key.length > 0 ? (key.slice(0, 4).toUpperCase() + "-" + key.slice(4, 8).toUpperCase()) : '';
+}

@@ -6,6 +6,9 @@
 export enum Endpoints {
     Login = "/login",
     Validate = "/validate",
+    InviteKey = "/invitekey",
     Department = "/department",
     Departments = "/departments",
+    Establishment = "/establishment",
+    Establishments = "/establishments",
 };

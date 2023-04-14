@@ -25,8 +25,6 @@
 import previewImageLight from "~/assets/img/mobile-light.png";
 import previewImageDark from "~/assets/img/mobile-dark.png";
 
-import "@material/web/button/filled-button";
-
 import { useStore } from "~/store";
 
 const store = useStore();
