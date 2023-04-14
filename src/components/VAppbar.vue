@@ -27,7 +27,7 @@ const route = useRoute();
 const store = useStore();
 
 function onLogout() {
-  store.dialog.logout.open = true;
+  store.dialog.logout.isOpen = true;
 }
 
 function changeTheme(ev: any) {

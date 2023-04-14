@@ -8,6 +8,11 @@
 :root {
   --md-icon-font: 'Material Symbols Rounded';
   --md-icon-weight: 500;
+  --md-icon-button-icon-size: 18px;
+
+  // Temporary fix for components not being themed
+  --md-dialog-container-color: var(--md-sys-color-inverse-on-surface);
+  --md-sys-color-surface-container-highest: var(--md-sys-color-surface-variant);
 }
 
 md-icon[filled] {
@@ -15,7 +20,7 @@ md-icon[filled] {
 }
 
 body {
-  @apply bg-background text-on-background h-screen;
+  @apply bg-background text-on-background h-screen text-sm;
 }
 
 #app {
@@ -23,41 +28,46 @@ body {
 }
 
 .card {
-  @apply flex flex-col bg-surface-variant text-on-surface-variant rounded-[32px] p-8;
+  @apply flex flex-col bg-inverse-on-surface text-on-surface-variant rounded-[32px] p-8;
 }
 
 .tonal-card {
-  @apply flex flex-col relative text-on-surface rounded-[32px] p-9;
-  
-  &::before {
-    content: "";
-    background-color: var(--md-sys-color-surface-variant);
-
-    @apply absolute inline-block top-0 left-0 right-0 bottom-0 rounded-[32px] z-[-1] opacity-50;
-  }
+  @apply flex flex-col bg-inverse-on-surface text-on-surface rounded-[32px] p-9;
 }
 
 .table {
-  @apply w-full bg-surface text-on-surface-variant rounded-2xl p-2 mt-3;
+  @apply flex justify-center w-full mt-10 relative overflow-x-auto overflow-y-visible py-3;
 
   table {
-    @apply w-full text-sm;
+    @apply w-full xl:w-3/4 bg-surface-variant shadow-md sm:rounded-lg;
+  }
 
-    th {
-      @apply bg-surface-variant-50 text-on-surface-variant py-2 border-2 border-outline-variant;
+  tbody tr {
+    @apply bg-surface;
+  }
+
+  tbody tr:hover {
+    @apply bg-inverse-on-surface;
+  }
+
+  th {
+    @apply text-primary py-3;
+
+    &:first-child {
+      @apply rounded-tl-lg;
     }
 
-    tr {
-      @apply text-center;
+    &:last-child {
+      @apply rounded-tr-lg;
     }
+  }
 
-    tbody tr {
-      @apply hover:bg-surface-variant-50 cursor-pointer;
-    }
+  td, th {
+    @apply text-center;
+  }
 
-    tbody tr td {
-      @apply py-2 border-2 border-outline-variant;
-    }
+  td {
+    @apply font-medium text-on-surface-variant py-1;
   }
 }
 

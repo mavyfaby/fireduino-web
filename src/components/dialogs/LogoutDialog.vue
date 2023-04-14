@@ -1,5 +1,5 @@
 <template>
-  <md-dialog :open="store.dialog.logout.open" @closed="onClose" scrimClickAction="">
+  <md-dialog :open="store.dialog.logout.isOpen" @closed="onClose" scrimClickAction="">
     <div slot="header">Logout</div>
 
     Are you sure you want to logout?
@@ -21,7 +21,7 @@ import router from "~/router";
 const store = useStore();
 
 function onClose() {
-  store.dialog.logout.open = false;
+  store.dialog.logout.isOpen = false;
 }
 
 function logout() {

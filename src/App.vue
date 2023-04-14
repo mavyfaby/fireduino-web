@@ -3,13 +3,15 @@
     <v-appbar />
     <router-view />
 
+    <MainDialog />
     <LogoutDialog />
   </div>
 </template>
 
 <script lang="ts" setup>
-import VAppbar from "~/components/VAppbar.vue";
-import LogoutDialog from "./dialogs/LogoutDialog.vue";
+import VAppbar from "./components/VAppbar.vue";
+import MainDialog from "./components/dialogs/MainDialog.vue";
+import LogoutDialog from "./components/dialogs/LogoutDialog.vue";
 
 import { setDefaultTheme } from './theme';
 

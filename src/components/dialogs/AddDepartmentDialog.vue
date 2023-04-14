@@ -1,5 +1,5 @@
 <template>
-  <md-dialog :open="store.dialog.addFireDepartments.open" @closed="onClose" scrimClickAction="">
+  <md-dialog :open="store.dialog.addFireDepartments.isOpen" @closed="onClose" scrimClickAction="">
     <div slot="header">Add Fire Department</div>
 
     <div class="grid items-center gap-5 py-2">
@@ -72,7 +72,7 @@
       <md-text-button v-if="isSuccess" label="Done" @click="onClose">
         <md-icon slot="icon">check</md-icon>
       </md-text-button>
-      <div v-else>
+      <div class="flex space-x-2" v-else>
         <md-text-button :disabled="isDisabled" label="Cancel" @click="onClose" />
         <md-text-button
           :disabled="isDisabled"
@@ -108,7 +108,7 @@ const isDisabled = ref(false);
 const isSuccess = ref(false);
 
 function onClose() {
-  store.dialog.addFireDepartments.open = false;
+  store.dialog.addFireDepartments.isOpen = false;
   isDisabled.value = false;
 
   if (isSuccess.value) {

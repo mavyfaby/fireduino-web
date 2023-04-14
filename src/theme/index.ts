@@ -1,5 +1,5 @@
 import type { Theme, Scheme } from "@material/material-color-utilities";
-import { argbFromHex, themeFromSourceColor, applyTheme, hexFromArgb, rgbaFromArgb } from "@material/material-color-utilities";
+import { argbFromHex, themeFromSourceColor, hexFromArgb, applyTheme } from "@material/material-color-utilities";
 import { setStore, getStore } from "~/utils/storage";
 import { map } from "~/utils/string";
 import { useStore } from "~/store";
@@ -39,10 +39,12 @@ export function setTheme(color: string, isDark: boolean) {
     background = theme.schemes.dark.background;
   }
 
+  // Apply dark mode class
+  document.body.classList.toggle("dark", store.dark);
   // Apply meta color theme
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", hexFromArgb(background));
   // Apply theme
-  applyCustomTheme(theme, { target: document.documentElement, dark: store.dark });
+  applyTheme(theme, { target: document.documentElement, dark: store.dark });
 }
 
 /**
@@ -57,71 +59,4 @@ export function isDarkMode() {
  */
 export function setDefaultTheme(isDark: boolean = isDarkMode()) {
   setTheme(THEME_COLOR, isDark);
-}
-
-/**
- * Apply a theme to an element
- *
- * @param theme Theme object
- * @param options Options
- */
-export function applyCustomTheme(theme: Theme, options?: {
-  dark?: boolean,
-  target?: HTMLElement,
-  brightnessSuffix?: boolean,
-  paletteTones?: number[],
-}) {
-  const target = options?.target || document.body;
-  const isDark = options?.dark ?? false;
-  const scheme = isDark ? theme.schemes.dark : theme.schemes.light;
-  setSchemeProperties(target, scheme);
-  if (options?.brightnessSuffix) {
-    setSchemeProperties(target, theme.schemes.dark, '-dark');
-    setSchemeProperties(target, theme.schemes.light, '-light');
-  }
-  if (options?.paletteTones) {
-    const tones = options?.paletteTones ?? [];
-    for (const [key, palette] of Object.entries(theme.palettes)) {
-      const paletteKey = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-      for (const tone of tones) {
-        const token = `--md-ref-palette-${paletteKey}-${paletteKey}${tone}`;
-        const color = hexFromArgb(palette.tone(tone));
-        target.style.setProperty(token, color);
-      }
-    }
-  }
-}
-
-function setSchemeProperties(
-    target: HTMLElement,
-    scheme: Scheme,
-    suffix: string = '',
-) {
-  for (const [key, value] of Object.entries(scheme.toJSON())) {
-    const token = key.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-    const color = hexFromArgb(value);
-
-    target.style.setProperty(`--md-sys-color-${token}${suffix}`, color);
-
-    let generate = true;
-
-    for (const t of ['outline', 'inverse', 'shadow', 'scrim']) {
-      if (token.includes(t)) {
-        generate = false;
-        break;
-      }
-    }
-
-    if (!generate) continue;
-
-    // Tones must be in-sync in tailwind config
-    for (const tone of [25, 50, 75]) {
-      // Set property
-      target.style.setProperty(
-        `--md-sys-color-${token}${suffix}-${tone}`,
-        // Map tone to 0-255
-        color + (map(tone, 0, 100, 0, 255) * 255).toString(16).slice(0, 2)
-      );
-    }
-  }
 }

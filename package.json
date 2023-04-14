@@ -1,7 +1,7 @@
 {
   "name": "fireduino-web",
   "private": true,
-  "version": "1.0.0-pre.14",
+  "version": "1.0.0-pre.15",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@material-symbols/font-600": "^0.5.5",
-    "@material/web": "^1.0.0-pre.5",
+    "@material/web": "^1.0.0-pre.6",
     "axios": "^1.3.5",
     "base-64": "^1.0.0",
     "pinia": "^2.0.34",
