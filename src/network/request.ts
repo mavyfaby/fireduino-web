@@ -6,6 +6,8 @@ import { Endpoints } from "./endpoints";
 import axios from "axios";
 import showToast from "~/utils/toast";
 import { getAuthToken } from "./session";
+import { useStore } from "~/store";
+import router from "~/router";
 
 // Create a new axios instance
 const instance = axios.create({
@@ -52,6 +54,23 @@ function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | nul
     // If has custom message
     if (error.response && ((error.response?.data) as any).message) {
       error.message = ((error.response?.data) as any).message
+    }
+
+    if (error.status === 401) {
+      const store = useStore();
+
+      store.dialog.main.open({
+        title: "Session expired",
+        content: "Please login again.",
+        actions: [
+          {
+            name: "Login",
+            action() {
+              router.replace({ name: "Login" });
+            }
+          }
+        ]
+      });
     }
 
     // Show error toast
