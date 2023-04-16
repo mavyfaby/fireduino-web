@@ -1,13 +1,11 @@
-import { tb64, rb64 } from "~/utils/string";
 import { getStore, setStore, removeStore } from "~/utils/storage";
-
 import makeRequest, { Endpoints } from "./request";
 
 /**
  * Save auth token in base64 format
  */
 export function saveAuthToken(token: string) {
-  setStore('token', tb64(token));
+  setStore('token', token);
 }
 
 /**
@@ -18,14 +16,6 @@ export function getAuthToken() {
   let token = getStore('token');
   // If token is not defined, return null
   if (token === null) return null;
-  // Otherwise, Decode token
-  token = rb64(token);
-
-  // If the decoded string is NOT a UTF-8 string, return null;
-  if (/[\u0080-\uffff]/.test(token)) {
-    return null;
-  }
-
   // Otherwise, return token
   return token;
 }

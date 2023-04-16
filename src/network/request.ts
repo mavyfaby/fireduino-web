@@ -5,7 +5,7 @@ import { Endpoints } from "./endpoints";
 
 import axios from "axios";
 import showToast from "~/utils/toast";
-import { getAuthToken } from "./session";
+import { getAuthToken, saveAuthToken } from "./session";
 import { useStore } from "~/store";
 import router from "~/router";
 
@@ -42,6 +42,16 @@ function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | nul
 
   // Execute request
   instance(config).then((response) => {
+    // Reset session
+    let token = response.headers.authorization;
+
+    // If has new token
+    if (token) {
+      token = token.split(" ")[1];
+      // Save new token
+      saveAuthToken(token);
+    }
+
     // If not success
     if (!response.data.success) {
       // Show error toast
