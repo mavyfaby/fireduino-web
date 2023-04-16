@@ -18,6 +18,9 @@ const useStore = defineStore("global", () => {
     logout: {
       isOpen: false
     },
+    session: {
+      isOpen: false
+    },
     main: {
       isOpen: false,
       title: "",

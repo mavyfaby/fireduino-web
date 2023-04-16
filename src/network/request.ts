@@ -56,21 +56,9 @@ function makeRequest(method: HttpMethod, endpoint: Endpoints, data: object | nul
       error.message = ((error.response?.data) as any).message
     }
 
-    if (error.status === 401) {
-      const store = useStore();
-
-      store.dialog.main.open({
-        title: "Session expired",
-        content: "Please login again.",
-        actions: [
-          {
-            name: "Login",
-            action() {
-              router.replace({ name: "Login" });
-            }
-          }
-        ]
-      });
+    // If session is expired
+    if (error.request.status === 401) {
+      useStore().dialog.session.isOpen = true;
     }
 
     // Show error toast

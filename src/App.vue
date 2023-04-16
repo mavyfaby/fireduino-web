@@ -5,6 +5,7 @@
 
     <MainDialog />
     <LogoutDialog />
+    <SessionExpiredDialog />
   </div>
 </template>
 
@@ -12,6 +13,7 @@
 import VAppbar from "./components/VAppbar.vue";
 import MainDialog from "./components/dialogs/MainDialog.vue";
 import LogoutDialog from "./components/dialogs/LogoutDialog.vue";
+import SessionExpiredDialog from "./components/dialogs/SessionExpiredDialog.vue";
 
 import { setDefaultTheme } from './theme';
 
