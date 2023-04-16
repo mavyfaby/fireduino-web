@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="flex justify-end">
-      <md-filled-button @click="openAddFireDepartmentDialog" label="Fire Department">
+      <md-filled-button :disabled="isLoading" @click="openAddFireDepartmentDialog" label="Fire Department">
         <md-icon slot="icon">add</md-icon>
       </md-filled-button>
     </div>
     <div class="table">
-      <table class="w-full text-sm text-left">
+      <md-circular-progress v-if="isLoading" indeterminate class="mt-4" />
+      
+      <table v-else class="w-full text-sm text-left">
         <thead class="text-xs uppercase">
           <tr>
             <th scope="col" class="px-4 py-3">#</th>
@@ -45,6 +47,7 @@ import showToast from "~/utils/toast";
 
 const store = useStore();
 const departments = ref<FireDepartment[]>([]);
+const isLoading = ref(true);
 
 function onEdit(id: number | undefined) {
   if (id === undefined) {
@@ -88,6 +91,8 @@ function openAddFireDepartmentDialog() {
 onMounted(getFireDepartments);
 
 function getFireDepartments() {
+  isLoading.value = true;
+
   makeRequest("GET", Endpoints.Departments, null, (error, response) => {
     if (error) {
       return;      
@@ -107,6 +112,7 @@ function getFireDepartments() {
     }
 
     departments.value = depts;
+    isLoading.value = false;
   });
 }
 </script>

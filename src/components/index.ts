@@ -14,3 +14,4 @@ import "@material/web/dialog/dialog";
 
 import "@material/web/navigationbar/navigation-bar";
 import "@material/web/navigationtab/navigation-tab";
+import "@material/web/circularprogress/circular-progress"

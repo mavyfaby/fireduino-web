@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="flex justify-end">
-      <md-filled-button @click="openAddEstablishmentDialog" label="Establishment">
+      <md-filled-button :disabled="isLoading" @click="openAddEstablishmentDialog" label="Establishment">
         <md-icon slot="icon">add</md-icon>
       </md-filled-button>
     </div>
     <div class="table">
-      <table class="w-full text-sm text-left">
+      <md-circular-progress v-if="isLoading" indeterminate class="mt-4" />
+
+      <table v-else class="w-full text-sm text-left">
         <thead class="text-xs uppercase">
           <tr>
             <th scope="col" class="px-4 py-3">#</th>
@@ -49,6 +51,7 @@ import showToast from "~/utils/toast";
 
 const store = useStore();
 const establishments = ref<Establishment[]>([]);
+const isLoading = ref(true);
 
 onMounted(getEstablishments);
 
@@ -104,6 +107,8 @@ function openAddEstablishmentDialog() {
  * Fetches all establishments
  */
 function getEstablishments() {
+  isLoading.value = true;
+
   makeRequest("GET", Endpoints.Establishments, null, (error, response) => {
     if (error) {
       return;      
@@ -124,6 +129,7 @@ function getEstablishments() {
     }
 
     establishments.value = estabs;
+    isLoading.value = false;
   });
 }
 </script>
