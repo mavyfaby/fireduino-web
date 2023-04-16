@@ -29,10 +29,10 @@
         </md-filled-text-field>
 
         <md-text-button
-          :disabled="isGeneratingKey"
-          @click=generateInviteKey
+          :disabled="isGeneratingKey || isCoolingDown"
+          @click="generateInviteKey"
           class="mb-3"
-          :label="isGeneratingKey ? 'Generating...' : 'Generate'"
+          :label="isCoolingDown ? coolDown :  isGeneratingKey ? 'Generating...' : 'Generate'"
         />
       </div>
       
@@ -122,6 +122,8 @@ const inviteKey = ref("");
 const isDisabled = ref(false);
 const isSuccess = ref(false);
 const isGeneratingKey = ref(false);
+const isCoolingDown = ref(false);
+const coolDown = ref(0);
 
 function onClose() {
   store.dialog.entity.isOpen = false;
@@ -165,6 +167,7 @@ function addEntity() {
 }
 
 function generateInviteKey() {
+  let interval: NodeJS.Timer;
   isGeneratingKey.value = true;
 
   makeRequest("GET", Endpoints.InviteKey, null, (error, response) => {
@@ -175,6 +178,17 @@ function generateInviteKey() {
 
     inviteKey.value = response.message;
     isGeneratingKey.value = false;
+    isCoolingDown.value = true;
+    coolDown.value = 5;
+
+    interval = setInterval(() => {
+      coolDown.value -= 1;
+
+      if (coolDown.value === 0) {
+        isCoolingDown.value = false;
+        clearInterval(interval);
+      }
+    }, 1000);
   });
 }
 

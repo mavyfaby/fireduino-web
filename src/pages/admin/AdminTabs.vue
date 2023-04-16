@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items-center">
-    <div class="flex w-full md:w-3/4 lg:w-1/2">
+    <div class="flex w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
       <md-navigation-tab label="Dashboard" @click="onTabClick(0)" :active="active == 0">
         <md-icon slot="activeIcon" filled>dashboard</md-icon>
         <md-icon slot="inactiveIcon">dashboard</md-icon>

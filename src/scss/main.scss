@@ -13,6 +13,8 @@
   // Temporary fix for components not being themed
   --md-dialog-container-color: var(--md-sys-color-inverse-on-surface);
   --md-sys-color-surface-container-highest: var(--md-sys-color-surface-variant);
+
+  --md-navigation-bar-hover-state-layer-opacity: 0;
 }
 
 md-icon[filled] {
