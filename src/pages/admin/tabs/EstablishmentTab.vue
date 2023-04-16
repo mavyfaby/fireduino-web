@@ -16,7 +16,6 @@
             <th scope="col" class="px-6 py-3">Invite Key</th>
             <th scope="col" class="px-6 py-3">Phone</th>
             <th scope="col" class="px-6 py-3">Address</th>
-            <th scope="col" class="px-6 py-3">Coordinates</th>
             <th scope="col" class="px-6 py-3">Actions</th>
           </tr>
         </thead>
@@ -27,7 +26,6 @@
             <td>{{ formatInviteKey(ent.invite_key) }}</td>
             <td>{{ ent.phone }}</td>
             <td>{{ ent.address }}</td>
-            <td>{{ ent.latitude }}, {{ ent.longitude }}</td>
             <td>
               <md-standard-icon-button @click="onEdit(ent.id)">edit</md-standard-icon-button>
             </td>
@@ -81,18 +79,15 @@ function openAddEstablishmentDialog() {
           name: entity.name,
           phone: entity.phone,
           address: entity.address,
-          latitude: entity.latitude,
-          longitude: entity.longitude,
           inviteKey: entity.invite_key
         }, (err, response) => {
-          // Show message
-          showToast(err || !response.success ? TYPE.ERROR : TYPE.SUCCESS, response.message);
-          
           if (err) {
             callback(false);
             return;
           }
-          
+
+          // Show message
+          showToast(TYPE.SUCCESS, response.message);
           // Reset inputs
           callback(true);
           // Fetch new departments
@@ -123,8 +118,6 @@ function getEstablishments() {
         name: d.c,
         phone: d.d,
         address: d.e,
-        latitude: d.f,
-        longitude: d.g
       });
     }
 

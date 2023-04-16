@@ -86,3 +86,27 @@ body {
   transform: translateX(20px);
   opacity: 0;
 }
+
+#fireduino-map, #fireduino-map > div {
+    @apply w-[500px] h-[400px] rounded-lg;
+}
+
+// .mapboxgl-map {
+//   @apply w-[400px] h-[281px];
+// }
+
+// .mapboxgl-ctrl-bottom-right, .mapboxgl-ctrl-bottom-left {
+//   @apply hidden;
+// }
+
+// .mapboxgl-canvas-container canvas {
+//   @apply rounded-xl;
+// }
+
+// .mapboxgl-ctrl-attrib-inner {
+//   @apply flex justify-center;
+
+//   a[title="OpenStreetMap"], a.mapbox-improve-map {
+//     @apply hidden;
+//   }
+// }

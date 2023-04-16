@@ -62,6 +62,15 @@ function openAddFireDepartmentDialog() {
     acceptAction: {
       name: "Add Department",
       action: (entity, callback) => {
+        // Validate location
+        if (!('latitude' in entity)) {
+          throw new Error("Latitude is required");
+        }
+
+        if (!('longitude' in entity)) {
+          throw new Error("Longitude is required");
+        }
+
         // Send request
         makeRequest("POST", Endpoints.Department, {
           name: entity.name,
@@ -70,14 +79,13 @@ function openAddFireDepartmentDialog() {
           latitude: entity.latitude,
           longitude: entity.longitude,
         }, (err, response) => {
-          // Show message
-          showToast(err || !response.success ? TYPE.ERROR : TYPE.SUCCESS, response.message);
-          
           if (err) {
             callback(false);
             return;
           }
           
+          // Show message
+          showToast(TYPE.SUCCESS, response.message);
           // Reset inputs
           callback(true);
           // Fetch new departments

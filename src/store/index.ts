@@ -1,4 +1,4 @@
-import type {  Establishment, FireDepartment } from "~/types";
+import type {  Config, Establishment, FireDepartment } from "~/types";
 import { defineStore } from "pinia";
 
 type DialogParam = { title : string, content: string, actions: EntityAction[] };
@@ -13,6 +13,10 @@ const useStore = defineStore("global", () => {
   const dark: boolean = false;
   const isNotAuth: boolean = false;
   const isFromLogout: boolean = false;
+  const config: Config = {
+    mapsApi: "",
+    reverseGeocodingApi: ""
+  };
 
   const dialog = {
     logout: {
@@ -20,6 +24,12 @@ const useStore = defineStore("global", () => {
     },
     session: {
       isOpen: false
+    },
+    map: {
+      isOpen: false,
+      address: "",
+      latitude: "",
+      longitude: ""
     },
     main: {
       isOpen: false,
@@ -54,7 +64,7 @@ const useStore = defineStore("global", () => {
   };
 
   return {
-    dark, isNotAuth, isFromLogout, dialog
+    dark, isNotAuth, isFromLogout, dialog, config
   };
 });
 

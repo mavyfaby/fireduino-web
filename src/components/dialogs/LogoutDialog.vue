@@ -12,11 +12,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from "vue-router";
 import { revokeAuthToken } from "~/network/session";
 import { useStore } from "~/store";
-import router from "~/router";
 
 const store = useStore();
+const router = useRouter();
 
 function onClose() {
   store.dialog.logout.isOpen = false;

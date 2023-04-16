@@ -16,7 +16,7 @@ const pinia = createPinia();
 // TODO: Change toast colors
 const toastOptions = {
   position: POSITION.BOTTOM_RIGHT,
-  maxToasts: 2,
+  maxToasts: 4,
 };
 
 app.use(router);

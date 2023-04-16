@@ -11,6 +11,7 @@
     </div>
     
     <AddEntityDialog />
+    <LocationPickerDialog />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import EstablishmentTab from "./tabs/EstablishmentTab.vue";
 import FireDepartmentTab from "./tabs/FireDepartmentTab.vue";
 
 import AddEntityDialog from "~/components/dialogs/AddEntityDialog.vue";
+import LocationPickerDialog from "~/components/dialogs/LocationPickerDialog.vue";
 
 const tab = ref(0);
 

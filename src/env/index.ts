@@ -9,3 +9,8 @@ export const MAX_INPUTS = {
     LONGITUDE: 32,
   }
 };
+
+export const MAP_CENTER = {
+  LATITUDE: 10.3157,
+  LONGITUDE: 123.8854,
+}

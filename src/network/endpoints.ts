@@ -5,6 +5,7 @@
 // List of endpoints
 export enum Endpoints {
     Login = "/login",
+    Config = "/config",
     Validate = "/validate",
     InviteKey = "/invitekey",
     Department = "/department",
