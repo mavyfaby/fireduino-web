@@ -4,12 +4,12 @@
 
 // List of endpoints
 export enum Endpoints {
-    Login = "/login",
-    Config = "/config",
-    Validate = "/validate",
-    InviteKey = "/invitekey",
-    Department = "/department",
-    Departments = "/departments",
-    Establishment = "/establishment",
-    Establishments = "/establishments",
+    Login = "/admin/login",
+    Config = "/admin/config",
+    Validate = "/admin/validate",
+    InviteKey = "/admin/invitekey",
+    Department = "/admin/department",
+    Departments = "/admin/departments",
+    Establishment = "/admin/establishment",
+    Establishments = "/admin/establishments",
 };
