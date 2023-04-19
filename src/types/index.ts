@@ -15,6 +15,7 @@ export type FireDepartment = {
   address: string;
   latitude: string;
   longitude: string;
+  date_stamp?: string;
 }
 
 export type Establishment = {
@@ -23,4 +24,5 @@ export type Establishment = {
   phone: string;
   address: string;
   invite_key: string;
+  date_stamp?: string;
 }

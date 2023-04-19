@@ -5,7 +5,26 @@
         <md-icon slot="icon">add</md-icon>
       </md-filled-button>
     </div>
-    <div class="table">
+
+    <div class="flex justify-center">
+      <md-circular-progress v-if="isLoading" indeterminate class="mt-4" />
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-5 mt-7">
+      <div class="h-full" v-for="(dept, i) of departments" :key="dept.id">
+        <EntityCard
+          :type="2"
+          :index="i"
+          :name="dept.name"
+          :address="dept.address"
+          :phone="dept.phone"
+          :latitude="dept.latitude"
+          :longitude="dept.longitude"
+          :date-stamp="dept.date_stamp"
+        />
+      </div>
+    </div>
+
+    <!-- <div class="table">
       <md-circular-progress v-if="isLoading" indeterminate class="mt-4" />
       
       <table v-else class="w-full text-sm text-left">
@@ -32,7 +51,7 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -44,6 +63,8 @@ import { ref, onMounted } from "vue";
 import { useStore } from "~/store";
 import makeRequest, { Endpoints } from "~/network/request";
 import showToast from "~/utils/toast";
+
+import EntityCard from "~/components/EntityCard.vue";
 
 const store = useStore();
 const departments = ref<FireDepartment[]>([]);
@@ -115,7 +136,8 @@ function getFireDepartments() {
         phone: d.c,
         address: d.d,
         latitude: d.e,
-        longitude: d.f
+        longitude: d.f,
+        date_stamp: d.g
       });
     }
 

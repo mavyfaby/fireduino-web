@@ -1,37 +1,25 @@
 <template>
-  <div>
+  <div class="mb-10">
     <div class="flex justify-end">
       <md-filled-button :disabled="isLoading" @click="openAddEstablishmentDialog" label="Establishment">
         <md-icon slot="icon">add</md-icon>
       </md-filled-button>
     </div>
-    <div class="table">
+    <div class="flex justify-center">
       <md-circular-progress v-if="isLoading" indeterminate class="mt-4" />
-
-      <table v-else class="w-full text-sm text-left">
-        <thead class="text-xs uppercase">
-          <tr>
-            <th scope="col" class="px-4 py-3">#</th>
-            <th scope="col" class="px-6 py-3">Name</th>
-            <th scope="col" class="px-6 py-3">Invite Key</th>
-            <th scope="col" class="px-6 py-3">Phone</th>
-            <th scope="col" class="px-6 py-3">Address</th>
-            <th scope="col" class="px-6 py-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(ent, i) of establishments" :key="ent.id">
-            <td>{{ i + 1 }}</td>
-            <td>{{ ent.name }}</td>
-            <td>{{ formatInviteKey(ent.invite_key) }}</td>
-            <td>{{ ent.phone }}</td>
-            <td>{{ ent.address }}</td>
-            <td>
-              <md-standard-icon-button @click="onEdit(ent.id)">edit</md-standard-icon-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-5 mt-7">
+      <div class="h-full" v-for="(estb, i) of establishments" :key="estb.id">
+        <EntityCard
+          :type="1"
+          :index="i"
+          :name="estb.name"
+          :address="estb.address"
+          :phone="estb.phone"
+          :invite-key="formatInviteKey(estb.invite_key)"
+          :date-stamp="estb.date_stamp"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +31,8 @@ import { TYPE } from "vue-toastification";
 import { ref, onMounted } from "vue";
 import { useStore } from "~/store";
 import { formatInviteKey } from "~/utils/string";
+
+import EntityCard from "~/components/EntityCard.vue";
 
 import makeRequest, { Endpoints } from "~/network/request";
 import showToast from "~/utils/toast";
@@ -118,6 +108,7 @@ function getEstablishments() {
         name: d.c,
         phone: d.d,
         address: d.e,
+        date_stamp: d.f
       });
     }
 
