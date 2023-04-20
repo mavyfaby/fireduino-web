@@ -1,23 +1,15 @@
 <template>
   <div class="flex justify-center items-center">
     <div class="flex w-full md:w-3/4 lg:w-1/2 xl:w-1/3">
-      <md-navigation-tab label="Dashboard" @click="onTabClick(0)" :active="active == 0">
-        <md-icon slot="activeIcon" filled>dashboard</md-icon>
-        <md-icon slot="inactiveIcon">dashboard</md-icon>
-      </md-navigation-tab>
-      <md-navigation-tab label="Establishments" @click="onTabClick(1)" :active="active == 1">
-        <md-icon slot="activeIcon" filled>location_city</md-icon>
-        <md-icon slot="inactiveIcon">location_city</md-icon>
-      </md-navigation-tab>
-      <md-navigation-tab label="Fire Departments" @click="onTabClick(2)" :active="active == 2">
-        <md-icon slot="activeIcon" filled>cloud</md-icon>
-        <md-icon slot="inactiveIcon">cloud</md-icon>
-      </md-navigation-tab>
+      <VTabs @change="onTabClick" :active="active" :tabs="tabs" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import VTabs from '~/components/tabs/VTabs.vue';
+import type { Tab } from '~/types';
+
 // Define props
 defineProps({
   active: {
@@ -28,6 +20,13 @@ defineProps({
 
 // Define emits
 const emit = defineEmits(["change"]);
+
+// Tabs
+const tabs: Tab[] = [
+  { id: 0, label: "Dashboard", icon: "dashboard" },
+  { id: 1, label: "Establishments", icon: "location_city" },
+  { id: 2, label: "Fire Departments", icon: "cloud" }
+];
 
 /**
  * Change the active tab

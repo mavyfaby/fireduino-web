@@ -8,6 +8,12 @@ export type Config = {
   reverseGeocodingApi: string;
 };
 
+export type Tab = {
+  id: number,
+  label: string,
+  icon: string,
+}
+
 export type FireDepartment = {
   id?: number;
   name: string;
