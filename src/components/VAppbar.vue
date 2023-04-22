@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between p-4">
+  <div class="appbar flex justify-between p-4">
     <div class="left">
       <v-logo />
     </div>
@@ -11,14 +11,26 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, onMounted } from "vue";
 import VLogo from "./VLogo.vue";
 
+import anime from "animejs/lib/anime.es.js";
 import { useRoute } from "vue-router";
 import { useStore } from "~/store";
 import { setDefaultTheme, isDarkMode } from "~/theme";
 
 const route = useRoute();
 const store = useStore();
+
+onMounted(() => {
+  anime({
+    targets: ".appbar",
+    translateY: [-50, 0],
+    delay: 1000,
+    duration: 1000,
+    easing: 'easeOutElastic(0.5, 0.4)',
+  });
+});
 
 function onLogout() {
   store.dialog.logout.isOpen = true;
@@ -29,7 +41,11 @@ function changeTheme(ev: any) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.appbar {
+  @apply -translate-y-[50px];
+}
+
 .left, .right {
   @apply flex items-center;
 }

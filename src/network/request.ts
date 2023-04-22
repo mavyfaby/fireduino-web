@@ -7,7 +7,6 @@ import axios from "axios";
 import showToast from "~/utils/toast";
 import { getAuthToken, saveAuthToken } from "./session";
 import { useStore } from "~/store";
-import router from "~/router";
 
 // Create a new axios instance
 const instance = axios.create({

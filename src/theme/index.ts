@@ -41,6 +41,8 @@ export function setTheme(color: string, isDark: boolean) {
 
   // Apply dark mode class
   document.body.classList.toggle("dark", store.dark);
+  // Apply meta theme
+  document.documentElement.setAttribute("data-color-scheme", store.dark ? "dark" : "light");
   // Apply meta color theme
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", hexFromArgb(background));
   // Apply theme
