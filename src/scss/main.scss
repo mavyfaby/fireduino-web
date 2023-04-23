@@ -35,6 +35,8 @@ md-icon[filled] {
     
     @apply bg-outline-variant;
   }
+
+  transition: background-color 0.21s ease-out, opacity 0.21s ease-out;
 }
 
 body {
