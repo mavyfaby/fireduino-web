@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import VLogo from "./VLogo.vue";
 
 import anime from "animejs/lib/anime.es.js";
@@ -19,17 +19,20 @@ import { useRoute } from "vue-router";
 import { useStore } from "~/store";
 import { setDefaultTheme, isDarkMode } from "~/theme";
 
-const route = useRoute();
 const store = useStore();
+const route = useRoute();
 
 onMounted(() => {
-  anime({
-    targets: ".appbar",
-    translateY: [-50, 0],
-    delay: 1000,
-    duration: 1000,
-    easing: 'easeOutElastic(0.5, 0.4)',
-  });
+  // Animate appbar only on Lannding page
+  if (location.pathname === "/") {
+    anime({
+      targets: ".appbar",
+      translateY: [-50, 0],
+      delay: 750,
+      duration: 1000,
+      easing: 'easeOutElastic(0.5, 0.4)',
+    });
+  }
 });
 
 function onLogout() {
@@ -42,10 +45,6 @@ function changeTheme(ev: any) {
 </script>
 
 <style lang="scss" scoped>
-.appbar {
-  @apply -translate-y-[50px];
-}
-
 .left, .right {
   @apply flex items-center;
 }
