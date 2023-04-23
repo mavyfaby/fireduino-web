@@ -37,6 +37,10 @@ md-icon[filled] {
   }
 
   transition: background-color 0.21s ease-out, opacity 0.21s ease-out;
+
+  ::selection {
+    @apply bg-primary text-on-primary;
+  }
 }
 
 body {

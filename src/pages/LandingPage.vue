@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <div class="main-container">
-      <div class="flex flex-col">
-        <div ref="tx1" class="h-6 text-sm lg:text-base" />
-        <h2 ref="tx2" class="h-12 text-5xl lg:text-6xl font-bold my-7" />
-        <h6 ref="tx3" class="text-sm mx-10 lg:mx-0 lg:text-lg tracking-wide leading-6" />
-        <div class="flex justify-center lg:justify-start">
-          <md-filled-button ref="el1" class="invisible opacity-0 mt-8" label="Get Started" />
-        </div>
+  <div class="main-container">
+    <div class="flex flex-col">
+      <div ref="tx1" class="h-6 text-sm font-medium text-on-surface lg:text-base poppins" />
+      <h2 ref="tx2" class="title poppins" />
+      <h6 ref="tx3" class="text-base tracking-[0.1px] mx-10 lg:mx-0 lg:text-lg leading-7" />
+      <div class="flex justify-center lg:justify-start">
+        <md-filled-button ref="el1" class="invisible opacity-0 mt-8" label="Get Started" />
       </div>
+    </div>
+    <div ref="tlt" data-tilt data-tilt-reverse="true" data-tilt-full-page-listening>
       <div ref="el2" class="invisible flex justify-center lg:justify-end">
         <img :src="previewImageDark" class="w-64 lg:w-[300px] mt-16 absolute" :class="store.dark ? 'opacity-1' : 'opacity-0'" />
         <img :src="previewImageLight" class="w-64 lg:w-[300px] mt-16" :class="store.dark ? 'opacity-0' : 'opacity-1'" />
@@ -22,7 +22,9 @@ import previewImageLight from "~/assets/img/mobile-light.png";
 import previewImageDark from "~/assets/img/mobile-dark.png";
 
 import Typed from "typed.js";
+import VanillaTilt from 'vanilla-tilt';
 import anime from 'animejs/lib/anime.es.js';
+
 import { ref, onMounted } from "vue";
 import { useStore } from "~/store";
 
@@ -39,11 +41,15 @@ const tx2 = ref<HTMLElement | null>(null);
 const tx3 = ref<HTMLElement | null>(null);
 const el1 = ref<HTMLElement | null>(null);
 const el2 = ref<HTMLElement | null>(null);
+const tlt = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   const tx1Text = strings[0];
   const tx2Text = strings[1];
   const tx3Text = strings[2];
+
+  // Tilt animation
+  VanillaTilt.init(tlt.value!);
 
   // Animation timeline
   const tl = anime.timeline();
@@ -147,5 +153,10 @@ onMounted(() => {
 
 img {
   @apply shadow-xl shadow-neutral-300/50 dark:shadow-neutral-700/50 rounded-2xl;
+}
+
+.title {
+  @apply h-12 text-5xl lg:text-6xl font-bold my-7 text-primary;
+  text-shadow: 0 0 0.175rem var(--md-sys-color-primary);
 }
 </style>
