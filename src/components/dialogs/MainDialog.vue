@@ -5,7 +5,9 @@
     {{ store.dialog.main.content }}
 
     <div class="flex space-x-3" slot="footer">
-      <md-text-button v-for="btn of store.dialog.main.actions" :key="btn" @click="btn.action" :label="btn.name" />
+      <md-text-button v-for="btn of store.dialog.main.actions" :key="btn" @click="btn.action">
+        {{ btn.name }}
+      </md-text-button>
     </div>
   </md-dialog>
 </template>

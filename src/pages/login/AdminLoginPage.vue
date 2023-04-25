@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="tonal-card mt-16 w-full sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/3">
+    <VCard :loading="isLoading" class="mt-16 w-full sm:w-3/4 md:w-3/5 lg:w-1/2 xl:w-1/3">
       <h3 class="title">Admin Login</h3>
       <div class="flex flex-col">
         <!-- Username -->
@@ -30,12 +30,12 @@
 
         <!-- Login Button -->
         <div class="flex items-center justify-end">
-          <md-filled-button @click="login" class="mt-8" :disabled="isDisabled" :label="loginLabel">
-            <md-icon slot="icon" v-if="!isDisabled">login</md-icon>
+          <md-filled-button @click="login" class="mt-8" :disabled="isDisabled">
+            <md-icon slot="icon" v-if="!isDisabled">login</md-icon> {{ loginLabel }}
           </md-filled-button>
         </div>
       </div>
-    </div>  
+    </VCard>
   </div>
 </template>
 
@@ -49,9 +49,12 @@ import { useStore } from "~/store";
 import { saveAuthToken } from "~/network/session";
 import makeRequest, { Endpoints } from "~/network/request";
 
+import VCard from "~/components/VCard.vue";
+
 const user = ref("");
 const pass = ref("");
 const isDisabled = ref(false);
+const isLoading = ref(false);
 const loginLabel = ref("Login");
 const counter = ref(2);
 
@@ -71,6 +74,7 @@ function login() {
   if (isDisabled.value) return;
 
   isDisabled.value = true;
+  isLoading.value = true;
   loginLabel.value = `Checking credentials...`;
 
   const data = {
@@ -88,6 +92,7 @@ function login() {
 
       clearInterval(interval);
       isDisabled.value = false;
+      isLoading.value = false;
       loginLabel.value = "Login";
       counter.value = 2;
     }, 1000);
@@ -95,6 +100,7 @@ function login() {
     if (!error) {
       clearInterval(interval);
       isDisabled.value = true;
+
       loginLabel.value = "Login Successful";
 
       // Save login token

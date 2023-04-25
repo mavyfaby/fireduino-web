@@ -1,8 +1,8 @@
 <template>
   <div class="mb-10">
     <div class="flex justify-end">
-      <md-filled-button :disabled="isLoading" @click="openAddEstablishmentDialog" label="Establishment">
-        <md-icon slot="icon">add</md-icon>
+      <md-filled-button :disabled="isLoading" @click="openAddEstablishmentDialog">
+        <md-icon slot="icon">add</md-icon> Establishment
       </md-filled-button>
     </div>
     <div class="flex justify-center">

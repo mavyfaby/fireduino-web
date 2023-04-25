@@ -4,7 +4,9 @@
       <v-logo />
     </div>
     <div class="right">
-      <md-text-button v-if="route.name === 'Admin'" @click="onLogout" label="Logout" />
+      <md-text-button v-if="route.name === 'Admin'" @click="onLogout">
+        Logout
+      </md-text-button>
       <md-switch @click="changeTheme" :selected="isDarkMode()" />
     </div>
   </div>

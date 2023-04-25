@@ -5,8 +5,12 @@
     <div id="fireduino-map" />
 
     <div class="flex space-x-3" slot="footer">
-      <md-text-button label="Cancel" @click="onClose" />
-      <md-text-button label="Select" @click="select" />
+      <md-text-button @click="onClose">
+        Cancel
+      </md-text-button>
+      <md-text-button @click="select">
+        Select
+      </md-text-button>
     </div>
   </md-dialog>
 </template>

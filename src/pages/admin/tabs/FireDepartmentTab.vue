@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex justify-end">
-      <md-filled-button :disabled="isLoading" @click="openAddFireDepartmentDialog" label="Fire Department">
-        <md-icon slot="icon">add</md-icon>
+      <md-filled-button :disabled="isLoading" @click="openAddFireDepartmentDialog">
+        <md-icon slot="icon">add</md-icon> Fire Department
       </md-filled-button>
     </div>
 
@@ -23,35 +23,6 @@
         />
       </div>
     </div>
-
-    <!-- <div class="table">
-      <md-circular-progress v-if="isLoading" indeterminate class="mt-4" />
-      
-      <table v-else class="w-full text-sm text-left">
-        <thead class="text-xs uppercase">
-          <tr>
-            <th scope="col" class="px-4 py-3">#</th>
-            <th scope="col" class="px-6 py-3">Name</th>
-            <th scope="col" class="px-6 py-3">Phone</th>
-            <th scope="col" class="px-6 py-3">Address</th>
-            <th scope="col" class="px-6 py-3">Coordinates</th>
-            <th scope="col" class="px-6 py-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(dep, i) of departments" :key="dep.id">
-            <td>{{ i + 1 }}</td>
-            <td>{{ dep.name }}</td>
-            <td>{{ dep.phone }}</td>
-            <td>{{ dep.address }}</td>
-            <td>{{ dep.latitude }}, {{ dep.longitude }}</td>
-            <td>
-              <md-standard-icon-button @click="onEdit(dep.id)">edit</md-standard-icon-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div> -->
   </div>
 </template>
 

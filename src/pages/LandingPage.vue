@@ -5,7 +5,9 @@
       <h2 ref="tx2" class="title poppins" />
       <h6 ref="tx3" class="text-base tracking-[0.1px] mx-10 lg:mx-0 lg:text-lg leading-7" />
       <div class="flex justify-center lg:justify-start">
-        <md-filled-button ref="el1" class="invisible opacity-0 mt-8" label="Get Started" />
+        <md-filled-button ref="el1" class="invisible opacity-0 mt-8">
+          Get Started
+        </md-filled-button>
       </div>
     </div>
     <div ref="tlt" data-tilt data-tilt-reverse="true" data-tilt-full-page-listening>

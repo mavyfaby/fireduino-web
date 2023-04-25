@@ -55,46 +55,6 @@ body {
   @apply flex flex-col bg-inverse-on-surface text-on-surface-variant rounded-[32px] p-8;
 }
 
-.tonal-card {
-  @apply flex flex-col bg-inverse-on-surface text-on-surface rounded-[32px] p-9;
-}
-
-.table {
-  @apply flex justify-center w-full mt-10 relative overflow-x-auto overflow-y-visible py-3;
-
-  table {
-    @apply w-full xl:w-3/4 bg-surface-variant shadow-md sm:rounded-lg;
-  }
-
-  tbody tr {
-    @apply bg-surface;
-  }
-
-  tbody tr:hover {
-    @apply bg-inverse-on-surface;
-  }
-
-  th {
-    @apply text-primary py-3;
-
-    &:first-child {
-      @apply rounded-tl-lg;
-    }
-
-    &:last-child {
-      @apply rounded-tr-lg;
-    }
-  }
-
-  td, th {
-    @apply text-center;
-  }
-
-  td {
-    @apply font-medium text-on-surface-variant py-1;
-  }
-}
-
 .slide-fade-enter-active {
   transition: all 0.2s ease-out;
 }
@@ -112,23 +72,3 @@ body {
 #fireduino-map, #fireduino-map > div {
     @apply w-[500px] h-[400px] rounded-lg;
 }
-
-// .mapboxgl-map {
-//   @apply w-[400px] h-[281px];
-// }
-
-// .mapboxgl-ctrl-bottom-right, .mapboxgl-ctrl-bottom-left {
-//   @apply hidden;
-// }
-
-// .mapboxgl-canvas-container canvas {
-//   @apply rounded-xl;
-// }
-
-// .mapboxgl-ctrl-attrib-inner {
-//   @apply flex justify-center;
-
-//   a[title="OpenStreetMap"], a.mapbox-improve-map {
-//     @apply hidden;
-//   }
-// }

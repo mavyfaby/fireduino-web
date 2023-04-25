@@ -63,8 +63,9 @@
           :disabled="isGeneratingKey || isCoolingDown || isDisabled"
           @click="generateInviteKey"
           class="mb-3"
-          :label="isCoolingDown ? coolDown :  isGeneratingKey ? 'Generating...' : 'Generate'"
-        />
+        >
+          {{ isCoolingDown ? coolDown :  isGeneratingKey ? 'Generating...' : 'Generate' }}
+        </md-text-button>
       </div>
 
       <!-- Fire department only -->
@@ -72,8 +73,8 @@
         <div class="flex justify-between items-center">
           <span class="font-bold text-base">Location</span>
           <!-- Select location button -->
-          <md-filled-button @click="store.dialog.map.isOpen = true" label="Select location">
-            <md-icon slot="icon">location_on</md-icon>
+          <md-filled-button @click="store.dialog.map.isOpen = true">
+            <md-icon slot="icon">location_on</md-icon> Select location
           </md-filled-button>
         </div>
   
@@ -115,16 +116,16 @@
     </div>
 
     <div class="flex space-x-3" slot="footer">
-      <md-text-button v-if="isSuccess" label="Done" @click="onClose">
-        <md-icon slot="icon">check</md-icon>
+      <md-text-button v-if="isSuccess" @click="onClose">
+        <md-icon slot="icon">check</md-icon> Done
       </md-text-button>
       <div class="flex space-x-2" v-else>
-        <md-text-button :disabled="isDisabled" label="Cancel" @click="onClose" />
-        <md-text-button
-          :disabled="isDisabled"
-          :label="isDisabled ? 'Adding ' + (store.dialog.entity.entity === 'department' ? 'department...' : 'Establishment...') : store.dialog.entity.acceptAction.name"
-          @click="addEntity"
-        />
+        <md-text-button :disabled="isDisabled" @click="onClose">
+          Cancel
+        </md-text-button>
+        <md-text-button :disabled="isDisabled" @click="addEntity">
+          {{ isDisabled ? 'Adding ' + (store.dialog.entity.entity === 'department' ? 'department...' : 'Establishment...') : store.dialog.entity.acceptAction.name }}
+        </md-text-button>
       </div>
     </div>
   </md-dialog>

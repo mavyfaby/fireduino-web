@@ -13,3 +13,4 @@ import "@material/web/switch/switch";
 import "@material/web/dialog/dialog";
 
 import "@material/web/circularprogress/circular-progress"
+import "@material/web/linearprogress/linear-progress"

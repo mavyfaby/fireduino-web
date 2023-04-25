@@ -5,8 +5,12 @@
     Are you sure you want to logout?
 
     <div class="flex space-x-3" slot="footer">
-      <md-text-button label="Cancel" @click="onClose" />
-      <md-text-button label="Logout" @click="logout" />
+      <md-text-button @click="onClose">
+        Cancel
+      </md-text-button>
+      <md-text-button @click="logout">
+        Logout
+      </md-text-button>
     </div>
   </md-dialog>
 </template>

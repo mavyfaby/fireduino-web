@@ -5,7 +5,9 @@
     Please login again.
 
     <div class="flex space-x-3" slot="footer">
-      <md-text-button label="Login" @click="login" />
+      <md-text-button @click="login">
+        Login
+      </md-text-button>
     </div>
   </md-dialog>
 </template>
