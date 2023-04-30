@@ -124,7 +124,7 @@
           Cancel
         </md-text-button>
         <md-text-button :disabled="isDisabled" @click="addEntity">
-          {{ isDisabled ? 'Adding ' + (store.dialog.entity.entity === 'department' ? 'department...' : 'Establishment...') : store.dialog.entity.acceptAction.name }}
+          {{ isDisabled ? (store.dialog.entity.title.startsWith("Edit") ? 'Editing ' : 'Adding ') + (store.dialog.entity.entity === 'department' ? 'department...' : 'Establishment...') : store.dialog.entity.acceptAction.name }}
         </md-text-button>
       </div>
     </div>
@@ -132,7 +132,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useStore } from "~/store";
 import { MAX_INPUTS } from "~/env";
 import { isTelPhone, formatInviteKey  } from "~/utils/string";
@@ -141,6 +141,7 @@ import { Establishment, FireDepartment } from "~/types";
 
 const store = useStore();
 
+const id = ref(-1);
 const name = ref({ text: "", message: "" });
 const phone = ref({ text: "", message: "" });
 const address = ref({ text: "", message: "" });
@@ -153,6 +154,23 @@ const latitudeMessage = ref("");
 const longitudeMessage = ref("");
 const coolDown = ref(0);
 
+watch(() => store.dialog.entity.isOpen, (isOpen) => {
+  const entity = store.dialog.entity;
+
+  if (isOpen) {
+    if (entity.entity === "department" && entity.dept) {
+      const { dept } = entity;
+
+      id.value = dept.id!;
+      name.value.text = dept.name;
+      phone.value.text = dept.phone;
+      store.dialog.map.address = dept.address;
+      store.dialog.map.latitude = dept.latitude;
+      store.dialog.map.longitude = dept.longitude;
+    }
+  }
+})
+
 function onClose() {
   store.dialog.entity.isOpen = false;
   isDisabled.value = false;
@@ -160,6 +178,7 @@ function onClose() {
   inviteKey.value.text = "";
 
   if (isSuccess.value) {
+    id.value = -1;
     name.value.text = "";
     phone.value.text = "";
     address.value.text = "";
@@ -182,6 +201,7 @@ function addEntity() {
 
   // Establishment data
   const es_data: Establishment = {
+    id: id.value,
     name: name.value.text,
     phone: phone.value.text,
     address: address.value.text,
@@ -190,6 +210,7 @@ function addEntity() {
   
   // Fire department data
   const fr_data: FireDepartment = {
+    id: id.value,
     name: name.value.text,
     phone: phone.value.text,
     address: store.dialog.map.address,

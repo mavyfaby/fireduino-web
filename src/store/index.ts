@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 type DialogParam = { title : string, content: string, actions: EntityAction[] };
 type EntityAction = { name: string, action: Function };
 type EntityActionAccept = { name: string, action: (entity: Establishment | FireDepartment, callback: (success: boolean) => void) => void };
-type EntityParam = { title: string, entity: "establishment" | "department", acceptAction: EntityActionAccept };
+type EntityParam = { title: string, entity: "establishment" | "department", dept?: FireDepartment, estb?: Establishment, acceptAction: EntityActionAccept };
 
 /**
  * Global store
@@ -49,11 +49,15 @@ const useStore = defineStore("global", () => {
     entity: {
       isOpen: false,
       title: "",
-      entity: "",
+      entity: "" as "establishment" | "department",
+      dept: {} as FireDepartment,
+      estb: {} as Establishment,
       acceptAction: {} as EntityActionAccept,
       open(data: EntityParam) {
         this.title = data.title;
         this.entity = data.entity;
+        this.dept = data.dept!;
+        this.estb = data.estb!;
         this.acceptAction = data.acceptAction;
         this.isOpen = true;
       },

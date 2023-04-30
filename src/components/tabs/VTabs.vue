@@ -44,7 +44,7 @@ const emit = defineEmits(['change']);
 
 <style lang="scss" scoped>
 .tabs {
-  @apply flex justify-around w-full relative py-3 border-b border-outline-variant;
+  @apply flex justify-around w-full relative py-3;
 }
 
 .indicator {

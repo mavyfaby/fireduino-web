@@ -2,7 +2,7 @@
   <div class="entity-card">
     <div class="header">
       <h3>{{ name }}</h3>
-      <md-standard-icon-button @click="edit">Edit</md-standard-icon-button>
+      <md-standard-icon-button @click="emit('edit')">Edit</md-standard-icon-button>
     </div>
     <div class="details">
       <div>
@@ -23,13 +23,15 @@
       </div>
       <div>
         <md-icon>calendar_today</md-icon>
-        <div class="date">{{ formatDate(dateStamp) }}</div>
+        <p class="date">{{ formatDate(dateStamp) }}</p>
       </div>
     </div>
   </div>  
 </template>
 
 <script lang="ts" setup>
+const emit = defineEmits(["edit"]);
+
 defineProps({
   type: {
     type: Number,
@@ -67,11 +69,7 @@ defineProps({
     type: String,
     default: ""
   }
-})
-
-function edit() {
-  console.log("EDit");
-}
+});
 
 /**
  * Formats a date
@@ -119,8 +117,19 @@ function fixed(strnum: string, len: number = 3) {
     @apply flex text-primary items-center text-xl pt-0.5 opacity-75;
   }
 
-  .details > div {
-    @apply flex items-center gap-4;
+  .details {
+    > div {
+      @apply grid items-center gap-4;
+      grid-template-columns: repeat(14, minmax(0, 1fr));
+
+      md-icon {
+        @apply col-span-2;
+      }
+
+      p {
+        grid-column: span 12 / span 12;
+      }
+    }
   }
 }
 </style>

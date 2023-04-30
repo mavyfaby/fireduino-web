@@ -14,12 +14,14 @@
         <EntityCard
           :type="2"
           :index="i"
+          :id="dept.id!" 
           :name="dept.name"
           :address="dept.address"
           :phone="dept.phone"
           :latitude="dept.latitude"
           :longitude="dept.longitude"
           :date-stamp="dept.date_stamp"
+          @edit="onEdit(dept)"
         />
       </div>
     </div>
@@ -41,12 +43,66 @@ const store = useStore();
 const departments = ref<FireDepartment[]>([]);
 const isLoading = ref(true);
 
-function onEdit(id: number | undefined) {
-  if (id === undefined) {
+/**
+ * Edit a fire department
+ */
+function onEdit(dept: FireDepartment) {
+  if (dept.id === null) {
     return;
   }
+
+  store.dialog.entity.open({
+    title: "Edit Fire Department",
+    entity: "department",
+    dept: {
+      id: dept.id,
+      address: dept.address,
+      name: dept.name,
+      latitude: dept.latitude,
+      longitude: dept.longitude,
+      phone: dept.phone
+    },
+    acceptAction: {
+      name: "Edit Department",
+      action: (entity, callback) => {
+        // Validate location
+        if (!('latitude' in entity)) {
+          throw new Error("Latitude is required");
+        }
+
+        if (!('longitude' in entity)) {
+          throw new Error("Longitude is required");
+        }
+
+        // Send request
+        makeRequest("PUT", Endpoints.Department, {
+          id: entity.id,
+          name: entity.name,
+          phone: entity.phone,
+          address: entity.address,
+          latitude: entity.latitude,
+          longitude: entity.longitude,
+        }, (err, response) => {
+          if (err) {
+            callback(false);
+            return;
+          }
+          
+          // Show message
+          showToast(TYPE.SUCCESS, response.message);
+          // Reset inputs
+          callback(true);
+          // Fetch new departments
+          getFireDepartments();
+        });
+      }
+    }
+  });
 }
 
+/**
+ * Add a fire department
+ */
 function openAddFireDepartmentDialog() {
   store.dialog.entity.open({
     title: "Add Fire Department",

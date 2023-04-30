@@ -17,7 +17,7 @@
 
 <script lang="ts" setup>
 import axios from "axios";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useStore } from "~/store";
 import { Loader } from '@googlemaps/js-api-loader';
 import { MAP_CENTER } from "~/env";
@@ -25,7 +25,9 @@ import makeRequest, { Endpoints } from "~/network/request";
 
 const store = useStore();
 const address = ref("");
+
 let marker: google.maps.Marker;
+let map: google.maps.Map;
 
 const mapOptions = {
   center: {
@@ -34,6 +36,13 @@ const mapOptions = {
   },
   zoom: 12
 };
+
+watch(() => store.dialog.map.isOpen, (isOpen) => {
+  if (isOpen && store.dialog.entity.isOpen) {
+    const latLng = new google.maps.LatLng(parseFloat(store.dialog.map.latitude), parseFloat(store.dialog.map.longitude));
+    marker = createMarker(map, latLng);
+  }
+});
 
 onMounted(() => {
   // Check if api keys are loaded, if not
@@ -63,8 +72,8 @@ function initializeMap() {
   // Load Google Maps
   loader.load().then((google) => {
     // Initialize map
-    const map = new google.maps.Map(document.getElementById("fireduino-map")!, mapOptions);
-
+    map = new google.maps.Map(document.getElementById("fireduino-map")!, mapOptions);
+  
     // Add on map click listener
     google.maps.event.addListener(map, "click", (event: any) => {
       // Remove previous marker
@@ -96,6 +105,10 @@ function createMarker(map: google.maps.Map, latLng: google.maps.LatLng) {
 
 function onClose() {
   store.dialog.map.isOpen = false;
+  
+  if (marker) {
+    marker.setMap(null);
+  }
 }
 
 function select() {
