@@ -17,7 +17,7 @@
         <md-icon>lock</md-icon>
         <p class="key">{{ inviteKey }}</p>
       </div>
-      <div v-if="type === 2">
+      <div>
         <md-icon>my_location</md-icon>
         <p class="pos">{{ fixed(latitude) }} - {{ fixed(longitude) }}</p>
       </div>
@@ -81,7 +81,7 @@ function formatDate(date: string) {
 /**
  * Fixes a number to a certain length
  */
-function fixed(strnum: string, len: number = 3) {
+function fixed(strnum: string, len: number = 5) {
   return Number(strnum).toFixed(len);
 }
 </script>

@@ -15,9 +15,12 @@
           :index="i"
           :name="estb.name"
           :address="estb.address"
+          :latitude="estb.latitude"
+          :longitude="estb.longitude"
           :phone="estb.phone"
           :invite-key="formatInviteKey(estb.invite_key)"
           :date-stamp="estb.date_stamp"
+          @edit="onEdit(estb)"
         />
       </div>
     </div>
@@ -43,11 +46,57 @@ const isLoading = ref(true);
 
 onMounted(getEstablishments);
 
-function onEdit(id: number | undefined) {
-  if (id === undefined) {
+/**
+ * Edit an establishment
+ */
+ function onEdit(estb: Establishment) {
+  if (estb.id === null) {
     return;
   }
+
+  store.dialog.entity.open({
+    title: "Edit Establishment",
+    entity: "establishment",
+    estb,
+    acceptAction: {
+      name: "Edit Establishment",
+      action: (entity, callback) => {
+        // Validate location
+        if (!('latitude' in entity)) {
+          throw new Error("Latitude is required");
+        }
+
+        if (!('longitude' in entity)) {
+          throw new Error("Longitude is required");
+        }
+
+        // Send request
+        makeRequest("PUT", Endpoints.Establishment, {
+          id: entity.id,
+          name: entity.name,
+          phone: entity.phone,
+          address: entity.address,
+          latitude: entity.latitude,
+          longitude: entity.longitude,
+          inviteKey: "-"
+        }, (err, response) => {
+          if (err) {
+            callback(false);
+            return;
+          }
+          
+          // Show message
+          showToast(TYPE.SUCCESS, response.message);
+          // Reset inputs
+          callback(true);
+          // Fetch establishments
+          getEstablishments();
+        });
+      }
+    }
+  });
 }
+
 
 /**
  * Opens the add establishment dialog
@@ -69,6 +118,8 @@ function openAddEstablishmentDialog() {
           name: entity.name,
           phone: entity.phone,
           address: entity.address,
+          latitude: entity.latitude,
+          longitude: entity.longitude,
           inviteKey: entity.invite_key
         }, (err, response) => {
           if (err) {
@@ -108,7 +159,9 @@ function getEstablishments() {
         name: d.c,
         phone: d.d,
         address: d.e,
-        date_stamp: d.f
+        latitude: d.f,
+        longitude: d.g,
+        date_stamp: d.h
       });
     }
 

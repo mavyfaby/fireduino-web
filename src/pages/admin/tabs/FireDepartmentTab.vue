@@ -54,14 +54,7 @@ function onEdit(dept: FireDepartment) {
   store.dialog.entity.open({
     title: "Edit Fire Department",
     entity: "department",
-    dept: {
-      id: dept.id,
-      address: dept.address,
-      name: dept.name,
-      latitude: dept.latitude,
-      longitude: dept.longitude,
-      phone: dept.phone
-    },
+    dept,
     acceptAction: {
       name: "Edit Department",
       action: (entity, callback) => {

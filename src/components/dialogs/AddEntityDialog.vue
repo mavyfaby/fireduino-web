@@ -31,19 +31,6 @@
         </md-filled-text-field>
       </div>
 
-      <!-- Establishment Address -->
-      <md-filled-text-field
-        v-if="store.dialog.entity.entity === 'establishment'"
-        v-model.trim="address.text"
-        :error="address.message.length > 0"
-        :errorText="address.message"
-        :disabled="isDisabled"
-        :maxLength="MAX_INPUTS.FIRE_DEPARTMENTS.ADDRESS"
-        label="Address"
-      >
-        <md-icon slot="leadingicon">location_city</md-icon>
-      </md-filled-text-field>
-
       <!-- Establishment Invite Key -->
       <div v-if="store.dialog.entity.entity === 'establishment'" class="flex space-x-4 items-center">
         <md-filled-text-field
@@ -60,7 +47,7 @@
         </md-filled-text-field>
 
         <md-text-button
-          :disabled="isGeneratingKey || isCoolingDown || isDisabled"
+          :disabled="isGeneratingKey || isCoolingDown || isDisabled || store.dialog.entity.title.startsWith('Edit')"
           @click="generateInviteKey"
           class="mb-3"
         >
@@ -68,8 +55,8 @@
         </md-text-button>
       </div>
 
-      <!-- Fire department only -->
-      <div v-if="store.dialog.entity.entity === 'department'" class="grid gap-5"> 
+      <!-- Location -->
+      <div class="grid gap-5"> 
         <div class="flex justify-between items-center">
           <span class="font-bold text-base">Location</span>
           <!-- Select location button -->
@@ -82,8 +69,8 @@
         <md-filled-text-field
           readonly disabled
           :value="store.dialog.map.address"
-          :error="address.message.length > 0"
-          :errorText="address.message"
+          :error="addressMessage.length > 0"
+          :errorText="addressMessage"
           label="Address"
         >
           <md-icon slot="leadingicon">location_city</md-icon>
@@ -144,12 +131,12 @@ const store = useStore();
 const id = ref(-1);
 const name = ref({ text: "", message: "" });
 const phone = ref({ text: "", message: "" });
-const address = ref({ text: "", message: "" });
 const inviteKey = ref({ text: "", message: "" });
 const isDisabled = ref(false);
 const isSuccess = ref(false);
 const isGeneratingKey = ref(false);
 const isCoolingDown = ref(false);
+const addressMessage = ref("");
 const latitudeMessage = ref("");
 const longitudeMessage = ref("");
 const coolDown = ref(0);
@@ -158,15 +145,27 @@ watch(() => store.dialog.entity.isOpen, (isOpen) => {
   const entity = store.dialog.entity;
 
   if (isOpen) {
-    if (entity.entity === "department" && entity.dept) {
-      const { dept } = entity;
+    let data: FireDepartment | Establishment | null = null;
 
-      id.value = dept.id!;
-      name.value.text = dept.name;
-      phone.value.text = dept.phone;
-      store.dialog.map.address = dept.address;
-      store.dialog.map.latitude = dept.latitude;
-      store.dialog.map.longitude = dept.longitude;
+    if (entity.entity === "department" && entity.dept) {
+      data = entity.dept;
+    }
+
+    if (entity.entity === "establishment" && entity.estb) {
+      data = entity.estb;
+    }
+
+    if (data !== null) {
+      id.value = data.id!;
+      name.value.text = data.name;
+      phone.value.text = data.phone;
+      store.dialog.map.address = data.address;
+      store.dialog.map.latitude = data.latitude;
+      store.dialog.map.longitude = data.longitude;
+
+      if ("invite_key" in data) {
+        inviteKey.value.text = data.invite_key;
+      }
     }
   }
 })
@@ -181,7 +180,6 @@ function onClose() {
     id.value = -1;
     name.value.text = "";
     phone.value.text = "";
-    address.value.text = "";
   }
 
   isSuccess.value = false;
@@ -198,15 +196,6 @@ function addEntity() {
   if (!_validate()) return;
   // Disable all inputs
   isDisabled.value = true;
-
-  // Establishment data
-  const es_data: Establishment = {
-    id: id.value,
-    name: name.value.text,
-    phone: phone.value.text,
-    address: address.value.text,
-    invite_key: inviteKey.value.text,
-  };
   
   // Fire department data
   const fr_data: FireDepartment = {
@@ -216,6 +205,12 @@ function addEntity() {
     address: store.dialog.map.address,
     latitude: store.dialog.map.latitude,
     longitude: store.dialog.map.longitude,  
+  };
+
+  // Establishment data
+  const es_data: Establishment = {
+    ...fr_data,
+    invite_key: inviteKey.value.text,
   };
 
   // Trigger action
@@ -266,7 +261,6 @@ function _validate() {
   // Reset messages
   name.value.message = "";
   phone.value.message = "";
-  address.value.message = "";
 
   // Validate name
   if (name.value.text.length === 0) {
@@ -285,26 +279,9 @@ function _validate() {
     return false;
   }
   
-  // Establishment validation
-  if (store.dialog.entity.entity === "establishment") {
-    // Validate address
-    if (address.value.text.length === 0) {
-      address.value.message = "Address is required";
-      return false;
-    }
-
-    // Check for invite key
-    if (inviteKey.value.text.length === 0) {
-      inviteKey.value.message = "Invite key is required";
-      return false;
-    }
-
-    return true;
-  }
-
-  // Validate fire department address
+  // Validate address
   if (store.dialog.map.address.length === 0) {
-    address.value.message = "Address is required";
+    addressMessage.value = "Address is required";
     return false;
   }
 
@@ -318,6 +295,17 @@ function _validate() {
   if (store.dialog.map.longitude.length === 0) {
     longitudeMessage.value = "Longitude is required";
     return false;
+  }
+
+  // Establishment validation
+  if (store.dialog.entity.entity === "establishment") {
+    // Check for invite key
+    if (inviteKey.value.text.length === 0) {
+      inviteKey.value.message = "Invite key is required";
+      return false;
+    }
+
+    return true;
   }
 
   return true;
