@@ -10,7 +10,7 @@ import { useStore } from "~/store";
 
 // Create a new axios instance
 const instance = axios.create({
-  baseURL: process.env.NODE_ENV === "production" ? "https://fireduino.azurewebsites.net" : "http://127.0.0.1:4000",
+  baseURL: process.env.NODE_ENV === "production" ? "https://fireduino-api.vercel.app" : "http://127.0.0.1:4000",
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
   }
