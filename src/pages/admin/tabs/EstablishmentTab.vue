@@ -8,7 +8,7 @@
     <div class="flex justify-center">
       <md-circular-progress v-if="isLoading" indeterminate class="mt-4" />
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-5 mt-7">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-5 mt-7">
       <div class="h-full" v-for="(estb, i) of establishments" :key="estb.id">
         <EntityCard
           :type="1"
