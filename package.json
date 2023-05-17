@@ -1,6 +1,6 @@
 {
   "name": "fireduino-web",
-  "version": "1.0.0-pre.34",
+  "version": "1.0.0-pre.35",
   "description": "Official Fireduino Website and Admin Resource Management System",
   "main": "dist/index.js",
   "type": "module",
@@ -29,7 +29,7 @@
     "animejs": "^3.2.1",
     "axios": "^1.4.0",
     "base-64": "^1.0.0",
-    "pinia": "^2.0.36",
+    "pinia": "^2.1.1",
     "typed.js": "^2.0.16",
     "vanilla-tilt": "^1.8.0",
     "vue": "^3.3.2",
@@ -54,7 +54,7 @@
     "sass": "^1.62.1",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4",
-    "vite": "^4.3.5",
+    "vite": "^4.3.7",
     "vue-tsc": "^1.6.5"
   }
 }
