@@ -14,7 +14,7 @@ import type { Tab } from '~/types';
 defineProps({
   active: {
     type: Number,
-    default: 0,
+    default: 1,
   }
 });
 
@@ -23,7 +23,6 @@ const emit = defineEmits(["change"]);
 
 // Tabs
 const tabs: Tab[] = [
-  { id: 0, label: "Dashboard", icon: "dashboard" },
   { id: 1, label: "Establishments", icon: "location_city" },
   { id: 2, label: "Fire Departments", icon: "cloud" }
 ];

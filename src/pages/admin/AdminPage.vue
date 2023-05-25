@@ -4,8 +4,7 @@
     
     <div class="mt-5 overflow-y-visible">
       <transition name="slide-fade" mode="out-in">
-        <DashboardTab v-if="tab == 0" />
-        <EstablishmentTab v-else-if="tab == 1" />
+        <EstablishmentTab v-if="tab == 1" />
         <FireDepartmentTab v-else-if="tab == 2" />
       </transition>
     </div>
@@ -19,14 +18,13 @@
 import { ref } from "vue";
 
 import AdminTabs from "./AdminTabs.vue";
-import DashboardTab from "./tabs/DashboardTab.vue";
 import EstablishmentTab from "./tabs/EstablishmentTab.vue";
 import FireDepartmentTab from "./tabs/FireDepartmentTab.vue";
 
 import AddEntityDialog from "~/components/dialogs/AddEntityDialog.vue";
 import LocationPickerDialog from "~/components/dialogs/LocationPickerDialog.vue";
 
-const tab = ref(0);
+const tab = ref(1);
 
 /**
  * Change the active tab 

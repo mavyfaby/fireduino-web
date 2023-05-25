@@ -1,6 +1,6 @@
 {
   "name": "fireduino-web",
-  "version": "1.0.0-pre.35",
+  "version": "1.0.0-pre.36",
   "description": "Official Fireduino Website and Admin Resource Management System",
   "main": "dist/index.js",
   "type": "module",
@@ -46,7 +46,7 @@
     "@material/material-color-utilities": "^0.2.6",
     "@types/animejs": "^3.1.7",
     "@types/base-64": "^1.0.0",
-    "@types/google.maps": "^3.53.1",
+    "@types/google.maps": "^3.53.2",
     "@types/raf": "^3.4.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.14",
