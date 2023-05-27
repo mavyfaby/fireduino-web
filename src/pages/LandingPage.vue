@@ -5,7 +5,7 @@
       <h2 ref="tx2" class="title poppins" />
       <h6 ref="tx3" class="text-base tracking-[0.1px] mx-10 lg:mx-0 lg:text-lg leading-7" />
       <div class="flex justify-center lg:justify-start">
-        <md-filled-button ref="el1" class="invisible opacity-0 mt-8">
+        <md-filled-button @click="goToLogin" ref="el1" class="invisible opacity-0 mt-8">
           Get Started
         </md-filled-button>
       </div>
@@ -28,9 +28,11 @@ import VanillaTilt from 'vanilla-tilt';
 import anime from 'animejs/lib/anime.es.js';
 
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "~/store";
 
 const store = useStore();
+const router = useRouter();
 
 const strings = [
   "INTRODUCING",
@@ -44,6 +46,10 @@ const tx3 = ref<HTMLElement | null>(null);
 const el1 = ref<HTMLElement | null>(null);
 const el2 = ref<HTMLElement | null>(null);
 const tlt = ref<HTMLElement | null>(null);
+
+function goToLogin() {
+  router.push("/login");
+}
 
 onMounted(() => {
   const tx1Text = strings[0];
